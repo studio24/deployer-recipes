@@ -25,6 +25,7 @@ require 'contrib/studio24.php';
 The following tasks are available:
 
 * [studio24:sync-up](docs/sync-up.md) - sync asset files up to the remote host
+* [studio24:sync-down](docs/sync-down.md) - sync asset files from the remote host
 
 ## Requirements
 

@@ -5,7 +5,7 @@
 [Install all Studio 24 tasks](../README.md#installation) or install this individual task by adding to your `deploy.php`:
 
 ```php
-require 'contrib/studio24/sync-up.php';
+require 'contrib/studio24/sync-down.php';
 ```
 
 ## Configuration
@@ -14,7 +14,7 @@ require 'contrib/studio24/sync-up.php';
 
 ## Tasks
 
-- `studio24:sync-up` – sync files (e.g. assets) up to the remote host
+- `studio24:sync-down` – sync files (e.g. assets) down from the remote host
 
 ## Usage
 
