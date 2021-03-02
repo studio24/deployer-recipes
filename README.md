@@ -17,14 +17,13 @@ This will also install Deployer locally to your project if you don't already hav
 You can install individual tasks, or you can install all Studio 24 Deployer tasks by adding this to your `deploy.php`:
 
 ```php
-require 'contrib/studio24.php';
+require 'vendor/studio24/deployer-recipes/all.php';
 ```
 
 ## Tasks
 
 The following tasks are available:
 
-* [studio24:sync-up](docs/sync-up.md) - sync asset files up to the remote host
 * [studio24:sync-down](docs/sync-down.md) - sync asset files from the remote host
 
 ## Requirements
