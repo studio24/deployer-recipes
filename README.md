@@ -12,13 +12,13 @@ Install via Composer:
 composer require studio24/deployer-recipes --dev
 ```
 
-This will also install Deployer locally to your project if you don't already have it available.
-
-You can install individual tasks, or you can install all Studio 24 Deployer tasks by adding this to your `deploy.php`:
+Install all Studio 24 Deployer tasks by adding this to your `deploy.php`:
 
 ```php
 require 'vendor/studio24/deployer-recipes/all.php';
 ```
+
+To only install individual tasks, see the docs for each task.
 
 ## Tasks
 
