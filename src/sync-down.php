@@ -4,27 +4,23 @@ namespace Deployer;
 
 desc('Rsync assets from staging/production to development');
 task('studio24:sync-down', function () {
+
     $config = [
-        'shared' => get('remote_shared'),
-        'host' => get('hostip'),
+        'remote_shared' => get('remote_shared'),
+        'host_ip' => get('host_ip'),
         'local_dir' => get('local_dir'),
     ];
 
-    if (empty($config["shared"])) {
-        throw new \RuntimeException(
-            "Please set the remote shared directory");
-    };
-    if (empty($config["host"])) {
-        throw new \RuntimeException(
-            "Please set the remote IP address");
-    };
-    if (empty($config["local_dir"])) {
-        throw new \RuntimeException(
-            "Please set the local target directory");
-    };
+    foreach ($config as $key => $value) {
+        if (empty($value)) {
+            throw new \RuntimeException(
+                "Please set the configuration parameter $key");
+
+        }
+    }
 
 
-    $command = "rsync -avh deploy@{$config['host']}:{{deploy_path}}{$config['shared']}/ {$config['local_dir']}";
+    $command = "rsync -avh deploy@{$config['host_ip']}:{{deploy_path}}{$config['remote_shared']}/ {$config['local_dir']}";
 
 
 
