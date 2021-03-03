@@ -19,8 +19,9 @@ task('studio24:sync-down', function () {
         }
     }
 
+    $config['remote_shared'] = rtrim($config['remote_shared'],'/') . '/';
 
-    $command = "rsync -avh deploy@{$config['host_ip']}:{{deploy_path}}{$config['remote_shared']}/ {$config['local_dir']}";
+    $command = "rsync -avh deploy@{$config['host_ip']}:{{deploy_path}}{$config['remote_shared']} {$config['local_dir']}";
 
 
 

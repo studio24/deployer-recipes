@@ -12,5 +12,13 @@ $build_data = [
 'commitId' => run('git rev-parse HEAD'),
 'deployedBy' => runLocally('git config user.name') . ' (' . runLocally('git config user.email') . ')',
 ];
-run('echo \''.json_encode($build_data).'\' > _build_summary.json');
+
+    run('echo \''.json_encode($build_data).'\' > _build_summary.json');
+
+    $url = get('url');
+    $url = rtrim($url, '/') . '/';
+
+
+    writeln ('Build summary located at ' . $url . '_build_summary.json');
+
 });
