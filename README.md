@@ -26,6 +26,8 @@ The following tasks are available:
 
 * [studio24:sync-down](docs/sync-down.md) - sync asset files from the remote host
 * [studio24:build-summary](docs/build-summary.md) - create a _build_summary.json file
+* [studio24:show-summary](docs/show-summary.md) - displays a summary of the currently deployment in the terminal
+* [studio24:wordpress-install](docs/wordpress-install.md) - installs wordpress in /web/ if not included in source control
 
 ## Requirements
 
