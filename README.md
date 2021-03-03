@@ -25,6 +25,7 @@ To only install individual tasks, see the docs for each task.
 The following tasks are available:
 
 * [studio24:sync-down](docs/sync-down.md) - sync asset files from the remote host
+* [studio24:build-summary](docs/build-summary.md) - create a _build_summary.json file
 
 ## Requirements
 
