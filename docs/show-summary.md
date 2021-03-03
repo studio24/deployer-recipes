@@ -1,4 +1,4 @@
-# Sync down recipe
+# Show summary recipe
 
 Displays a human friendly summary of the current build information to preview what is currently deployed
 
