@@ -5,6 +5,19 @@ namespace Deployer;
 desc('Rsync assets from staging/production to development');
 task('studio24:sync-down', function () {
 
+    // @todo remove host_ip, use get('hostname') for current environment
+    /*
+     * @todo use array to define multiple sync commands
+     * Usage: dep studio24:sync-down staging assets
+     * @see https://deployer.org/docs/tasks.html#using-input-options
+
+    // name of thing to sync: remote => local
+    $syncDown = [
+        'assets' => ['shared/web/wp-content/uploads' => 'web/wp-content/upload'],
+        'log' => ...
+    ];
+    */
+
     $config = [
         'remote_shared' => get('remote_shared'),
         'host_ip' => get('host_ip'),

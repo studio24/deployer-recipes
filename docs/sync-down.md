@@ -11,7 +11,9 @@ require 'vendor/studio24/deployer-recipes/src/sync-down.php';
 ```
 
 ## Configuration
+
 Requirements
+
 ```php
 set('hostip', '49.129.3.92');
 set('local_dir', 'web/wp-content/uploads');
@@ -29,7 +31,13 @@ Sync from any environment configured to local machine
 ```dep studio24:sync-down environment```  
 
 eg:
-```dep studio24:sync-down staging```
+
+```
+dep studio24:sync-down staging
+
+// @todo 
+dep studio24:sync-down staging assets
+```
 
 
 
