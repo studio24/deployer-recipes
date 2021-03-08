@@ -3,7 +3,10 @@
 namespace Deployer;
 
 desc('Rsync assets from staging/production to development');
-task('studio24:sync-down', function () {
+task('s24:sync-down', function () {
+
+    // Increased timeout to overwrite default PHP limit of 300 seconds
+    set('default_timeout', 1200);
 
     // @todo remove host_ip, use get('hostname') for current environment
     /*
@@ -18,10 +21,11 @@ task('studio24:sync-down', function () {
     ];
     */
 
+
+
     $config = [
-        'remote_shared' => get('remote_shared'),
-        'host_ip' => get('host_ip'),
-        'local_dir' => get('local_dir'),
+        'remote_assets' => get('remote_assets'),
+        'local_assets' => get('local_assets'),
     ];
 
     foreach ($config as $key => $value) {
@@ -32,9 +36,9 @@ task('studio24:sync-down', function () {
         }
     }
 
-    $config['remote_shared'] = rtrim($config['remote_shared'],'/') . '/';
+    $config['remote_assets'] = rtrim($config['remote_assets'],'/') . '/';
 
-    $command = "rsync -avh deploy@{$config['host_ip']}:{{deploy_path}}{$config['remote_shared']} {$config['local_dir']}";
+    $command = "rsync -avh deploy@{{target}}:{{deploy_path}}{$config['remote_assets']} {$config['local_assets']}";
 
 
 

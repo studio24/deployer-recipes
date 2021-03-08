@@ -3,7 +3,7 @@
 namespace Deployer;
 
 desc('Display the build_summary from the webserver');
-task('Studio24:show-summary',function() {
+task('s24:show-summary',function() {
     $json = run('curl {{url}}/_build_summary.json');
     $json = json_decode($json,true);
 

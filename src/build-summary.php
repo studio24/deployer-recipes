@@ -3,7 +3,7 @@
 namespace Deployer;
 
 desc('Creates a _build_summary.json file in the webserver doc root');
-task('Studio24:build-summary', function () {
+task('s24:build-summary', function () {
     cd('{{release_path}}/' . get('webroot'));
     $build_data = [
         'environment' => get('stage'),
