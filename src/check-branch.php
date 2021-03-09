@@ -7,7 +7,7 @@ option('force', 'm', InputOption::VALUE_OPTIONAL, 'Forces deployment of a not ma
 
 
 desc('Check the branch to ensure only main/master is deployed to production');
-task('s24:branch-check',function() {
+task('s24:check-branch',function() {
     $stage = get('hostname');
     $branch = get('branch');
 
