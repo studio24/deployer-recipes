@@ -11,12 +11,12 @@ require 'vendor/studio24/deployer-recipes/src/sync-down.php';
 ```
 
 ## Configuration
-Requirements
-```php
-set('hostip', '49.129.3.92');
-set('local_dir', 'web/wp-content/uploads');
-set('remote_shared', '/shared/web/wp-content/uploads');
-```
+
+Requires the setting of
+* The target host
+* The local assets directory
+* The remote assets directory
+
 
 ## Tasks
 
@@ -24,12 +24,37 @@ set('remote_shared', '/shared/web/wp-content/uploads');
 
 ## Usage
 
+target added to each environment as part of host config
+```php
+host('production')
+    ...
+    
+    ->set('target',$production_server)
+    
+    ...
+```
+Also set the remote and local asset paths
+```
+// Set with other variables
+ $local_assets = 'web/wp-content/uploads';
+ $$remote_assets = '/shared/web/wp-content/uploads';
+
+// Sets the deployer variables
+set('local_assets', $local_assets);
+set('remote_assets', $remote_assets);
+```
 Sync from any environment configured to local machine   
 
 ```dep studio24:sync-down environment```  
 
 eg:
-```dep studio24:sync-down staging```
+
+```
+dep studio24:sync-down staging
+
+// @todo 
+dep studio24:sync-down staging assets
+```
 
 
 

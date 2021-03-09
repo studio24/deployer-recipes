@@ -11,27 +11,29 @@ require 'vendor/studio24/deployer-recipes/src/show-summary.php';
 ```
 
 ## Configuration
-Creates a file containing:
-* Current environment
-* The current build date & time
-* The currently deployed branch
-* The Commit ID
-* Who made the deployment
+No configuration is required.
 
 ## Tasks
 
 - `studio24:show-summary` – retrieves current deployment info and displays in the terminal
 
 ## Usage
-
+  
 Run on any environment to create the file   
 
 ```dep studio24:show-summary environment```  
 
 eg:
-```dep studio24:show-summary staging```  
-  
+```dep studio24:show-summary production```  
 
+This returns a response of
+
+```angular2html
+Build Summary:
+ 
+Currently deployed branch on the production environment is master, deployed on Wednesday, March 03 at 04:54PM by Alan Isaacson (alan@studio24.net).
+
+```
 
 
 

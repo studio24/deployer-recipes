@@ -1,6 +1,6 @@
 # Build summary recipe
 
-Creates a summary of current build information to preview what is currently deployed
+Creates a summary of current build information to preview what is currently deployed.
 
 ## Usage
 
@@ -11,30 +11,42 @@ require 'vendor/studio24/deployer-recipes/src/build-summary.php';
 ```
 
 ## Configuration
-Creates a file containing:
-* Current environment
-* The current build date & time
-* The currently deployed branch
-* The Commit ID
-* Who made the deployment
+No configuration is required.
 
 ## Tasks
 
-- `studio24:build-summary` – retrieves current deployment info and create a _build_summary.json file
+- `studio24:build-summary` – retrieves current deployment info and creates a `_build_summary.json` file in the web root
 
 ## Usage
 
-Run on any environment to create the file   
+Add task to your `deploy.php` script:
 
-```dep studio24:build-summary environment```  
+```
+task('deploy', [
+    ...
+    // Add before deploy:symlink
+    'studio24:build-summary',
+    
+    'deploy:symlink',
+    ...
+]);
+```
 
-eg:
-```dep studio24:build-summary staging```  
-  
-view the file by adding the name to the URI  
-```https://website_url/_build_summary.json```
+This creates a file containing:
+* Current environment
+* The current build date & time
+* The currently deployed branch
+* The commit ID
+* Who made the deployment
 
+Example:
 
-
-
-
+```json
+{
+  "environment": "staging",
+  "buildDateTime": "20210303_163358",
+  "gitBranch": "hotfix\/101-update-team",
+  "commitId": "01543dac170435769afa6ab90ef838d0c3001ac5",
+  "deployedBy": "Alan Isaacson (alan@studio24.net)"
+}
+```
