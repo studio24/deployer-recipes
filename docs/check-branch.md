@@ -33,7 +33,7 @@ task('deploy', [
     'deploy:info',
 
     's24:check-branch',
-    's24:confirm-deployment',    
+    's24:confirm',    
     ...
 ]);
 ```
