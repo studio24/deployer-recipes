@@ -1,6 +1,6 @@
 # Check branch recipe
 
-Checks the branch for deployment, to ensure that only the main/master branch is deployed to Master unless force is used.
+Checks the branch for deployment, to ensure that only the default branch (main/master) is deployed to production unless force is used.
 
 ## Usage
 
@@ -24,7 +24,7 @@ $main_branch = 'master'; or $main_branch = 'main';
 ## Usage
 
 Add task to your `deploy.php` script:  
-**Note:** it is suggested to use in conjunction with [confirm deployemnt](confirm-deployment.md)
+**Note:** it is suggested to use in conjunction with [confirm deployment](confirm-deployment.md)
 
 ```
 task('deploy', [

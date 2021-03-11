@@ -1,6 +1,6 @@
 # Confirm deployment recipe
 
-Simple recipe to be included whereever a usr needs to confirm continuing
+Simple recipe to ask confirmation from user before continuing with deployment.
 
 ## Usage
 

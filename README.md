@@ -24,10 +24,13 @@ To only install individual tasks, see the docs for each task.
 
 The following tasks are available:
 
-* [studio24:sync-down](docs/sync-down.md) - sync asset files from the remote host
-* [studio24:build-summary](docs/build-summary.md) - create a _build_summary.json file
-* [studio24:show-summary](docs/show-summary.md) - displays a summary of the currently deployment in the terminal
-* [studio24:wordpress-install](docs/wordpress-install.md) - installs wordpress in /web/ if not included in source control
+* [s24:build-summary](docs/build-summary.md) - create a `_build_summary.json` file to record deployment info
+* [s24:check-branch](docs/check-branch.md) - ensure only default branch (main/master) is deployed to production
+* [s24:disk-usage](docs/check-disk-space.md) - display server disk usage prior to deployment
+* [s24:confirm](docs/confirm-continue.md) - ask confirmation from user before continuing with deployment
+* [s24:show-summary](docs/show-summary.md) - display a summary of the current deployment info
+* [s24:sync-down](docs/sync-down.md) - sync asset files from the remote host
+* [s24:wordpress-install](docs/wordpress-install.md) - installs WordPress in /web/ if not included in source control
 
 ## Requirements
 
