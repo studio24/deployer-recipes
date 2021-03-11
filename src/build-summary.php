@@ -10,7 +10,7 @@ task('s24:build-summary', function () {
         'buildDateTime' => date('Ymd_His'),
         'gitBranch' => get('branch'),
         'commitId' => run('git rev-parse HEAD'),
-        'deployedBy' => runLocally('git config user.name') . ' (' . runLocally('git config user.email') . ')',
+        'deployedBy' => runLocally('git config user.name'),
     ];
 
     run("echo '" . json_encode($build_data, JSON_PRETTY_PRINT) . "' > _build_summary.json");
