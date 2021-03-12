@@ -11,7 +11,7 @@ task('s24:show-summary', function () {
     if ($json) {
         $date = new \DateTime($json['deploy_datetime']);
         $date = $date->format('l, F d \a\t h:iA');
-        $summary = 'Currently deployed branch on the <fg=blue;options=bold>'.$json['environment'].'</> environment is <fg=red;options=bold>'.$json['gitBranch'].'</>, deployed on <fg=black;options=bold>'.$date.'</> by <fg=green;options=bold>'.$json['deployedBy'].'</>.';
+        $summary = 'Currently deployed branch on the <fg=blue;options=bold>'.$json['environment'].'</> environment is <fg=red;options=bold>'.$json['git_branch'].'</>, deployed on <fg=black;options=bold>'.$date.'</> by <fg=green;options=bold>'.$json['deployed_by'].'</>.';
     } else {
         $summary = 'Unable to get a summary of the previous deployment.';
     }

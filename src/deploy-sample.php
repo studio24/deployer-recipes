@@ -7,6 +7,7 @@ namespace Deployer;
  * View the README.md for information on including
  * individual recipes
  */
+require 'recipe/common.php';
 require 'vendor/studio24/deployer-recipes/all.php';
 
 /*
