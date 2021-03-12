@@ -15,7 +15,8 @@
     }
   ],
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.3",
+    "ext-json": "*"
   },
   "require-dev": {
     "overtrue/phplint": "^2.3",
