@@ -28,16 +28,17 @@ The following tasks are available:
 * [s24:check-branch](docs/check-branch.md) - ensure only default branch (main/master) is deployed to production
 * [s24:confirm-continue](docs/confirm-continue.md) - ask confirmation from user before continuing with deployment
 * [s24:display-disk-space](docs/display-disk-space.md) - display server disk usage prior to deployment
+* [s24:notify-slack](docs/notify-slack.md) - send a notification to Slack on production deploy  
 * [s24:show-summary](docs/show-summary.md) - display a summary of the current deployment info
 * [s24:sync-down](docs/sync-down.md) - sync asset files from the remote host
 * [s24:wordpress-install](docs/wordpress-install.md) - installs WordPress in /web/ if not included in source control
+* [s24:vendors-subpath](docs/vendors-subpath.md) - Run composer install in a sub-path
 
 ## Full deploy example
-A sample of a full deploy file is in the src dir. To use ths file in a project copy it to you rproject root and rename to deploy.php
 
-```
-src/deploy-sample.php
-```
+A sample of a full deploy file can be found in `examples/deploy-sample.php`
+
+To use ths file in a project copy it to your project root and update the config variables. 
 
 ## Requirements
 
