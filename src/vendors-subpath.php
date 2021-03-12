@@ -2,7 +2,7 @@
 namespace Deployer;
 
 desc('Run composer install in a sub-path');
-task('s24:vendors-subpath',function(){
+task('s24:vendors-subpath', function () {
     $previousOptions = get('composer_options');
     $paths = get('composer_paths');
     $composer_paths = [
