@@ -19,7 +19,7 @@ No configuration is required.
 
 ## Usage
   
-Run on any environment to create the file   
+Run on any environment to display current deploy information   
 
 ```dep studio24:show-summary environment```  
 

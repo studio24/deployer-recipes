@@ -24,7 +24,7 @@ $main_branch = 'master'; or $main_branch = 'main';
 ## Usage
 
 Add task to your `deploy.php` script:  
-**Note:** it is suggested to use in conjunction with [confirm deployment](confirm-deployment.md)
+**Note:** it is suggested to use in conjunction with [confirm continue](confirm-continue.md)
 
 ```
 task('deploy', [
@@ -33,7 +33,7 @@ task('deploy', [
     'deploy:info',
 
     's24:check-branch',
-    's24:confirm',    
+    's24:confirm-continue',    
     ...
 ]);
 ```

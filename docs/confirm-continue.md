@@ -15,7 +15,7 @@ No configuration required.
 
 ## Tasks
 
-- `s24:confirm-deployment` – Requires user input to continue y/N (Default N)
+- `s24:confirm-continue` – Requires user input to continue y/N (Default N)
 
 
 ## Usage

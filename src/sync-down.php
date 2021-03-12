@@ -31,12 +31,12 @@ task('s24:sync-down', function () {
     foreach ($config as $key => $value) {
         if (empty($value)) {
             throw new \RuntimeException(
-                "Please set the configuration parameter $key");
-
+                "Please set the configuration parameter $key"
+            );
         }
     }
 
-    $config['remote_assets'] = rtrim($config['remote_assets'],'/') . '/';
+    $config['remote_assets'] = rtrim($config['remote_assets'], '/') . '/';
 
     $command = "rsync -avh deploy@{{target}}:{{deploy_path}}{$config['remote_assets']} {$config['local_assets']}";
 
@@ -49,9 +49,8 @@ task('s24:sync-down', function () {
     writeln(' ');
     writeln(' ');
 
-    if(!askConfirmation('Continue with rsync?')) {
+    if (!askConfirmation('Continue with rsync?')) {
         die('Ok, rsync cancelled.');
     }
     output()->write(runLocally($command));
-
 });
