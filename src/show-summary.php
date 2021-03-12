@@ -7,15 +7,14 @@ task('s24:show-summary', function () {
     
     // Get build file
     $file = get('url') . '/_build_summary.json';
-    $json = file_get_contents($file);
-    if ($json === false) {
-        writeLn(sprintf('<comment>Cannot load build summary from %s</comment>', $file));
+    $file = file_get_contents($file);
+    if ($file === null) {
+        writeLn(sprintf('<comment>Cannot load build summary from URL %s</comment>', $file));
         return;
     }
-    try {
-        $json = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-    } catch (\JsonException $e) {
-        writeLn(sprintf('<comment>Cannot decode JSON build summary from %s</comment>', $file));
+    $json = json_decode($file, true);
+    if ($json === null) {
+        writeLn(sprintf('<comment>Cannot decode JSON build summary from URL %s, error: %s</comment>', $file, json_last_error_msg()));
         return;
     }
 
