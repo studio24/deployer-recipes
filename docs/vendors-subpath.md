@@ -1,6 +1,7 @@
 # Vendors sub-path
 
-Run composer install in a sub-path
+Run composer install in a sub-path. This is useful if you have a composer.json file outside of the project root that 
+you want to install on deployment.
 
 ## Usage
 
