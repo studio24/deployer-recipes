@@ -2,11 +2,12 @@
 
 namespace Deployer;
 
+use Deployer\Task\Context;
 use Symfony\Component\Console\Input\InputOption;
 
 option('files', null, InputOption::VALUE_OPTIONAL, 'Files to sync from remote to local');
 
-desc('Sync files or folders from the remote host to local development');
+desc('Download files from staging or production to local development');
 task('sync', function () {
     $files = [];
     if (input()->hasOption('files')) {
@@ -33,7 +34,12 @@ task('sync', function () {
     // Increased timeout to overwrite default PHP limit of 300 seconds
     set('default_timeout', 1200);
 
-    $command = "rsync -avh deploy@{{host}}:{{deploy_path}}/{$remote} {$local}";
+    /**
+     * @see https://github.com/deployphp/deployer/blob/v6.8.0/src/Task/Context.php
+     */
+    $host = Context::get()->getHost();
+
+    $command = "rsync -avh {$host}:{{deploy_path}}/{$remote} {$local}";
 
     writeln(' ');
     if (preg_match('/\/$/', $remote)) {
