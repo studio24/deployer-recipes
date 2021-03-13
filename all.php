@@ -1,7 +1,7 @@
 <?php
 
 // Require all Studio 24 Deployer tasks
-require_once __DIR__ . '/src/sync-down.php';
+require_once __DIR__ . '/src/sync.php';
 require_once __DIR__ . '/src/build-summary.php';
 require_once __DIR__ . '/src/show-summary.php';
 require_once __DIR__ . '/src/wordpress-install.php';
