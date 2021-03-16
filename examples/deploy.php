@@ -115,7 +115,7 @@ task('deploy', [
     'deploy:release',
     'deploy:update_code',
 
-    // Check this on Deployer docs before using
+    // Composer install
     'deploy:vendors,',
 
     'deploy:shared',
