@@ -38,3 +38,6 @@ jobs:
 
       - name: Code lint PHP files
         run: composer run-script lint
+
+      - name: Coding standards
+        run: composer run-script standards
