@@ -18,7 +18,10 @@ $repository = 'git@github.com:studio24/xxxxxxxxx.git';
 $sync = [
     'images' => [
         'shared/web/wp-content/uploads/' => 'web/wp-content/uploads'
-    ]
+    ],
+     'weblogs' => [
+        'data/logs/' => 'logs',
+]
 ];
 
 // Shared files that are not in git and need to persist between deployments (e.g. local config)
@@ -40,12 +43,21 @@ $writable_directories = [
     'web/wp-content/cache'
 ];
 
+// Custom (non-root) composer installs required
+$composer_paths = [
+    'web/wp-content/plugins/s24-wp-image-optimiser'
+];
+
 
 /**
  * Apply configuration to Deployer
  *
  * Don't edit beneath here unless you know what you're doing!
+ *
+ * DO NOT store the Slack hook in a public repo
  */
+
+
 set('application', $project_name);
 set('repository', $repository);
 set('shared_files', $shared_files);
@@ -65,15 +77,18 @@ set('default_stage', 'staging');
 /**
  * Hosts
  */
-host('123.123.123.123')
+
+host('production')
     ->stage('production')
     ->user('deploy')
+    ->hostname('123.456.789.10')
     ->set('deploy_path', '/data/var/www/vhosts/our-site/production')
     ->set('url', 'https://www.our-website.com');
 
-host('123.123.123.123')
+host('staging')
     ->stage('staging')
     ->user('deploy')
+    ->hostname('123.456.789.10')
     ->set('deploy_path', '/data/var/www/vhosts/our-site/staging')
     ->set('url', 'https://staging.our-website.com');
 
@@ -92,17 +107,13 @@ task('deploy', [
     's24:display-disk-space',
 
     // Request confirmation to continue (default N)
-    's24:confirm',
+    's24:confirm-continue',
 
     // Deploy site
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
     'deploy:update_code',
-
-    // Installs the latest release of WordPress core to {{webroot}}/wordpress
-    's24:wordpress-install,',
-    
     'deploy:shared',
     'deploy:writable',
     'deploy:clear_paths',

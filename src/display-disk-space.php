@@ -4,7 +4,7 @@ namespace Deployer;
 
 desc('Display server disk usage prior to deployment');
 task('s24:display-disk-space', function () {
-    $target = get('target');
-    output()->write(runLocally("ssh deploy@$target df -kh --exclude-type=tmpfs --exclude-type=devtmpfs"));
+    $target = Context::get()->getHost();
+    output()->write(runLocally("ssh $target df -kh --exclude-type=tmpfs --exclude-type=devtmpfs"));
     writeln(' ');
 });
