@@ -30,15 +30,19 @@ The following tasks are available:
 * [s24:display-disk-space](docs/display-disk-space.md) - display server disk usage prior to deployment
 * [s24:notify-slack](docs/notify-slack.md) - send a notification to Slack on production deploy  
 * [s24:show-summary](docs/show-summary.md) - display a summary of the current deployment info
-* [s24:sync-down](docs/sync-down.md) - sync asset files from the remote host
-* [s24:wordpress-install](docs/wordpress-install.md) - installs WordPress in /web/ if not included in source control
 * [s24:vendors-subpath](docs/vendors-subpath.md) - Run composer install in a sub-path
+* [sync](docs/sync.md) - sync files or folders from the remote host to local development
 
 ## Full deploy example
 
-A sample of a full deploy file can be found in `examples/deploy-sample.php`
+A sample of a full deploy file can be found in `examples/deploy.php`
+**NOTE:** If you do not need to run a composer install remove the lines below (118 & 119)  
+```    
+    // Composer install
+    'deploy:vendors,',
+```
 
-To use ths file in a project copy it to your project root and update the config variables. 
+To use these file in a project copy it to your project root and update the config variables. 
 
 ## Requirements
 
