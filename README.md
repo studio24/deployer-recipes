@@ -38,7 +38,7 @@ The following tasks are available:
 A sample of a full deploy file can be found in `examples/deploy.php`
 **NOTE:** If you do not need to run a composer install remove the lines below (118 & 119)  
 ```    
-    // Check this on Deployer docs before using
+    // Composer install
     'deploy:vendors,',
 ```
 
