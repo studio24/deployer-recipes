@@ -35,8 +35,12 @@ The following tasks are available:
 
 ## Full deploy example
 
-A sample of a full deploy file which runs composer install on deployment in the project root can be found in `examples/deploy-composer.php`
-A sample of a full deploy file without running composer install in the project root can be found in `examples/deploy-non-composer.php`
+A sample of a full deploy file can be found in `examples/deploy.php`
+**NOTE:** If you do not need to run a composer install remove the lines below (118 & 119)  
+```    
+    // Check this on Deployer docs before using
+    'deploy:vendors,',
+```
 
 To use these file in a project copy it to your project root and update the config variables. 
 
