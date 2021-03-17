@@ -3,3 +3,7 @@ composer.phar
 
 composer.lock
 .phplint-cache
+
+.idea
+
+

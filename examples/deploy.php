@@ -107,7 +107,7 @@ task('deploy', [
     's24:display-disk-space',
 
     // Request confirmation to continue (default N)
-    's24:confirm',
+    's24:confirm-continue',
 
     // Deploy site
     'deploy:prepare',

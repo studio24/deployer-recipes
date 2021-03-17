@@ -69,13 +69,13 @@ Sync from any environment configured to your local development environment. By d
 fisrt sync path setup in config.
 
 ```
-dep sync <environment>
+vendor/bin/dep sync <environment>
 ```  
 
 E.g.
 
 ```
-dep sync staging
+vendor/bin/dep sync staging
 ```
 
 To sync different file paths, you can use the `--files` option. For example, to sync down a logfile setup the config 
@@ -96,7 +96,7 @@ set('sync', $sync);
 And the sync command would be:
 
 ```
-dep sync staging log
+vendor/bin/dep sync staging log
 ```
 
 

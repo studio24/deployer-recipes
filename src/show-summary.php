@@ -2,14 +2,27 @@
 
 namespace Deployer;
 
+use Symfony\Component\HttpClient\HttpClient;
+
 desc('Display the build_summary from the webserver');
 task('s24:show-summary', function () {
-    
+    // Check for build file
+    $client = HttpClient::create();
+    $response = $client->request('GET', get('url') . '/_build_summary.json');
+
+    $statusCode = $response->getStatusCode();
+
+    if ($statusCode != '200') {
+        writeLn(sprintf('<comment>Unable to load the file returns a %s, </comment>', $statusCode));
+        return;
+    }
+
+
     // Get build file
-    $file = get('url') . '/_build_summary.json';
-    $file = file_get_contents($file);
-    if ($file === null) {
-        writeLn(sprintf('<comment>Cannot load build summary from URL %s</comment>', $file));
+    $file = $response->getContent();
+
+    if (empty($file)) {
+        writeLn(sprintf('<comment>There is no content in build summary from URL %s</comment>', $file));
         return;
     }
     $json = json_decode($file, true);

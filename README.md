@@ -10,8 +10,15 @@ Install via Composer:
 
 ```
 composer require studio24/deployer-recipes --dev
+```  
+This project will use a local deployer installation as part of the composer install/require process. To run deployments please use 
 ```
-
+vendor/bin/dep deploy environment 
+```
+rather than 
+```
+dep deploy environment
+```
 Install all Studio 24 Deployer tasks by adding this to your `deploy.php`:
 
 ```php
@@ -36,7 +43,7 @@ The following tasks are available:
 ## Full deploy example
 
 A sample of a full deploy file can be found in `examples/deploy.php`
-**NOTE:** If you do not need to run a composer install remove the lines below (118 & 119)  
+**NOTE:** If you do not need to run a composer install during deployemnt remove the lines below (118 & 119)  
 ```    
     // Composer install
     'deploy:vendors,',
