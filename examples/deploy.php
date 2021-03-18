@@ -116,7 +116,7 @@ task('deploy', [
     'deploy:update_code',
 
     // Composer install
-    'deploy:vendors,',
+    'deploy:vendors',
 
     'deploy:shared',
     'deploy:writable',
