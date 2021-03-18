@@ -11,14 +11,7 @@ Install via Composer:
 ```
 composer require studio24/deployer-recipes --dev
 ```  
-This project will use a local deployer installation as part of the composer install/require process. To run deployments please use 
-```
-vendor/bin/dep deploy environment 
-```
-rather than 
-```
-dep deploy environment
-```
+
 Install all Studio 24 Deployer tasks by adding this to your `deploy.php`:
 
 ```php
@@ -26,6 +19,34 @@ require 'vendor/studio24/deployer-recipes/all.php';
 ```
 
 To only install individual tasks, see the docs for each task.
+
+### Running Deployer
+
+Please note this project uses a local Deployer installation (via Composer) not a global version of Deployer. This is so we
+can make use of other Composer packages in deployment tasks reliably.
+
+To run deployments please use:
+
+```
+vendor/bin/dep deploy environment 
+```
+
+rather than:
+
+```
+dep deploy environment
+```
+
+If you wish, you can [install vendor binaries to another location](https://getcomposer.org/doc/articles/vendor-binaries.md#can-vendor-binaries-be-installed-somewhere-other-than-vendor-bin-)
+by editing your project composer.json file. For example, to install to `bin` so you can run deployer via `bin/dep`: 
+
+```json
+{
+  "config": {
+    "bin-dir": "bin"
+  }
+}
+```
 
 ## Tasks
 
@@ -43,13 +64,15 @@ The following tasks are available:
 ## Full deploy example
 
 A sample of a full deploy file can be found in `examples/deploy.php`
-**NOTE:** If you do not need to run a composer install during deployemnt remove the lines below (118 & 119)  
+
+To use this file in a project copy it to your project root and update the config variables.
+
+Please edit `deploy.php` depending on your needs. For example if you don't need to run Composer during deployment remove the line: 
+
 ```    
     // Composer install
     'deploy:vendors,',
 ```
-
-To use these file in a project copy it to your project root and update the config variables. 
 
 ## Requirements
 
