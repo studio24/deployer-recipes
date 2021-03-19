@@ -11,10 +11,7 @@ require 'vendor/studio24/deployer-recipes/src/check-branch.php';
 ```
 
 ## Configuration
-Requires the main branch to be set in deploy.php
-```
-$main_branch = 'master'; or $main_branch = 'main';
-```
+No configuration required
 
 ## Tasks
 
@@ -40,7 +37,7 @@ task('deploy', [
 
 Default protection result
 ```
-dep deploy production --branch=hotfix
+vendor/bin/dep deploy production --branch=hotfix
 ```
 will result in the exception
 ```
@@ -49,7 +46,7 @@ You cannot deploy hotfix  to production
 ```
 To force a non main branch to be deployed use
 ```
-dep deploy production --branch=hotfix --force=true
+vendor/bin/dep deploy production --branch=hotfix --force=true
 ```
 which will result in 
 ```

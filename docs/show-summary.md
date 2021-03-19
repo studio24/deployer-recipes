@@ -21,14 +21,18 @@ No configuration is required.
   
 Run on any environment to display current deploy information   
 
-```dep studio24:show-summary environment```  
+```
+vendor/bin/dep studio24:show-summary environment
+```  
 
 eg:
-```dep studio24:show-summary production```  
+```
+vendor/bin/dep studio24:show-summary production
+```  
 
 This returns a response of
 
-```angular2html
+```
 Build Summary:
  
 Currently deployed branch on the production environment is master, deployed on Wednesday, March 03 at 04:54PM by Alan Isaacson (alan@studio24.net).
