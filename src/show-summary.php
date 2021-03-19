@@ -3,13 +3,14 @@
 namespace Deployer;
 
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 
 desc('Display the build_summary from the webserver');
 task('s24:show-summary', function () {
     // Check for build file
     $client = HttpClient::create();
-    $response = $client->request('GET', get('url') . '/_build_summary.json');
-
+    $buildUrl = get('url') . '/_build_summary.json';
+    $response = $client->request('GET', $buildUrl);
     $statusCode = $response->getStatusCode();
 
     if ($statusCode != '200') {
@@ -17,15 +18,16 @@ task('s24:show-summary', function () {
         return;
     }
 
-
     // Get build file
-    $file = $response->getContent();
+    try {
+        $json = $response->toArray();
 
-    $json = $response->toArray();
-
-    $json = json_decode($file, true);
-    if ($json === null) {
-        writeLn(sprintf('<comment>Cannot decode JSON build summary from URL %s, error: %s</comment>', $file, json_last_error_msg()));
+    } catch (DecodingExceptionInterface $e) {
+        writeLn(sprintf('<comment>Cannot decode JSON build summary from URL %s, error: %s</comment>', $buildUrl, $e->getMessage()));
+        return;
+    }
+    if (empty($json)) {
+        writeLn(sprintf('<comment>No data found in JSON build summary from URL %s</comment>', $buildUrl));
         return;
     }
 
