@@ -21,10 +21,8 @@ task('s24:show-summary', function () {
     // Get build file
     $file = $response->getContent();
 
-    if (empty($file)) {
-        writeLn(sprintf('<comment>There is no content in build summary from URL %s</comment>', $file));
-        return;
-    }
+    $json = $response->toArray();
+
     $json = json_decode($file, true);
     if ($json === null) {
         writeLn(sprintf('<comment>Cannot decode JSON build summary from URL %s, error: %s</comment>', $file, json_last_error_msg()));
