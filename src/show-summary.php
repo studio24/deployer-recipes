@@ -13,7 +13,7 @@ task('s24:show-summary', function () {
     $statusCode = $response->getStatusCode();
 
     if ($statusCode != '200') {
-        writeLn(sprintf('<comment>Unable to load the file returns a %s, </comment>', $statusCode));
+        writeLn(sprintf('<comment>The build_summary.json file is unavailable with the status code</> <info>%s</> ', $statusCode));
         return;
     }
 
