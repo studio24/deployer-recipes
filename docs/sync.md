@@ -96,7 +96,7 @@ set('sync', $sync);
 And the sync command would be:
 
 ```
-vendor/bin/dep sync staging log
+vendor/bin/dep sync staging --files=log
 ```
 
 
