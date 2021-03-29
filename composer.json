@@ -17,12 +17,12 @@
   "require": {
     "php": ">=7.2",
     "ext-json": "*",
+    "deployer/deployer": "^6.8",
     "symfony/http-client": "^5.2"
   },
   "require-dev": {
     "overtrue/phplint": "^2.3",
-    "squizlabs/php_codesniffer": "^3.5",
-    "deployer/deployer": "^6.8"
+    "squizlabs/php_codesniffer": "^3.5"
   },
   "scripts": {
     "lint": "phplint ./",
