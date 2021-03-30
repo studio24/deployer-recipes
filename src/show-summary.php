@@ -28,8 +28,6 @@ task('s24:show-summary', function () {
     // Get build file
     try {
         $json = $response->toArray();
-
-
     } catch (DecodingExceptionInterface $e) {
         writeLn(sprintf('<comment>Cannot decode JSON build summary from URL %s, error: %s</comment>', $buildUrl, $e->getMessage()));
         return;
