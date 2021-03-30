@@ -100,6 +100,10 @@ host('staging')
 
 desc('Deploy ' . get('application'));
 task('deploy', [
+
+    // Check that we are using local deployer
+    's24:check-deployer',
+
     // Run initial checks
     'deploy:info',
     's24:check-branch',
