@@ -17,7 +17,7 @@ $scriptPath = get_included_files()[0];
 
 ## Tasks
 
-- `s24:check-deployer` – checks whether you are running local deployer, if not it stops the deployment
+- `s24:check-local-deployer` – checks whether you are running local deployer, if not it stops the deployment
 
 ## Usage
 
