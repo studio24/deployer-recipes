@@ -1,6 +1,6 @@
-# Build summary recipe
+# Check local deployer recipe
 
-Checks that deployment is running via the local deploy
+Checks that deployment is running via the local Deployer install.
 ## Usage
 
 Either [install all Studio 24 tasks](../README.md#installation) or install this individual task by adding to your `deploy.php`:
@@ -10,7 +10,10 @@ require 'vendor/studio24/deployer-recipes/src/check-deployer.php';
 ```
 
 ## Configuration
-No configuration is required.
+The recipe detects the first item in the array of file paths only
+````
+$scriptPath = get_included_files()[0];
+````
 
 ## Tasks
 
