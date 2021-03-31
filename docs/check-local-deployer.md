@@ -24,7 +24,7 @@ Add task to the start of your `deploy.php` script:
 task('deploy', [
     ...
     // Add before deploy:info
-    's24:check-deployer',
+    's24:check-local-deployer',
 
     // Run initial checks
     'deploy:info',

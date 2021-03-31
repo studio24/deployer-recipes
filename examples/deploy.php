@@ -102,7 +102,7 @@ desc('Deploy ' . get('application'));
 task('deploy', [
 
     // Check that we are using local deployer
-    's24:check-deployer',
+    's24:check-local-deployer',
 
     // Run initial checks
     'deploy:info',
