@@ -6,7 +6,7 @@ Checks that deployment is running via the local Deployer install.
 Either [install all Studio 24 tasks](../README.md#installation) or install this individual task by adding to your `deploy.php`:
 
 ```php
-require 'vendor/studio24/deployer-recipes/src/check-deployer.php';
+require 'vendor/studio24/deployer-recipes/src/check-local-deployer.php';
 ```
 
 ## Configuration
