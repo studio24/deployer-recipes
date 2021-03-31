@@ -9,3 +9,4 @@ require_once __DIR__ . '/src/confirm-continue.php';
 require_once __DIR__ . '/src/display-disk-space.php';
 require_once __DIR__ . '/src/vendors-subpath.php';
 require_once __DIR__ . '/src/notify-slack.php';
+require_once __DIR__ . '/src/check-local-deployer.php';

@@ -15,7 +15,7 @@ No configuration is required.
 
 ## Tasks
 
-- `studio24:build-summary` – retrieves current deployment info and creates a `_build_summary.json` file in the web root
+- `s24:build-summary` – retrieves current deployment info and creates a `_build_summary.json` file in the web root
 
 ## Usage
 
