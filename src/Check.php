@@ -15,10 +15,10 @@ class Check
         if (null === $includedFilePaths) {
             $includedFilePaths = get_included_files();
         }
-        if (strpos($includedFilePaths[0], '/vendor/deployer/deployer/bin/dep') === false) {
-            return false;
+        if (strpos($includedFilePaths[0], '/vendor/deployer/deployer/bin/dep') !== false) {
+            return true;
         }
-        return true;
+        return false;
     }
 
 }
