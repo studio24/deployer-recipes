@@ -7,7 +7,12 @@ task('s24:check-local-deployer', function () {
 
     $scriptPath = get_included_files()[0];
 
-    if (strpos($scriptPath, __DIR__.'/vendor/deployer/deployer/bin/dep') === false) {
-        throw new \RuntimeException("Pleaae run using local Deployer with ./vendor/bin/dep");
+    if (strpos($scriptPath, '/vendor/deployer/deployer/bin/dep') === false) {
+        writeln("");
+        writeln("<comment>Please check you are running local Deployer with ./vendor/bin/dep</>");
+        writeln("");
+    }
+    if (!askConfirmation('Continue with deployment?')) {
+        die('Ok, deployment cancelled.');
     }
 });
