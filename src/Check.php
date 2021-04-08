@@ -20,5 +20,4 @@ class Check
         }
         return false;
     }
-
 }
