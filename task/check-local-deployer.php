@@ -2,6 +2,8 @@
 
 namespace Deployer;
 
+use Studio24\Deployer\Check;
+
 desc('Check currently used deployer path');
 task('s24:check-local-deployer', function () {
 
