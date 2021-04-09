@@ -1,4 +1,5 @@
 <?php
+
 namespace Deployer;
 
 desc('Run composer install in a sub-path');

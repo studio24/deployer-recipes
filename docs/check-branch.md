@@ -7,7 +7,7 @@ Checks the branch for deployment, to ensure that only the default branch (main/m
 Either [install all Studio 24 tasks](../README.md#installation) or install this individual task by adding to your `deploy.php`:
 
 ```php
-require 'vendor/studio24/deployer-recipes/src/check-branch.php';
+require 'vendor/studio24/deployer-recipes/task/check-branch.php';
 ```
 
 ## Configuration
