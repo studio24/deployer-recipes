@@ -2,7 +2,7 @@
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="phpcs.xsd">
 
     <file>src</file>
-    <file>task</file>
+    <file>tasks</file>
 
     <arg name="basepath" value="."/>
     <arg name="colors"/>

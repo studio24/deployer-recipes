@@ -8,7 +8,7 @@ you want to install on deployment.
 Either [install all Studio 24 tasks](../README.md#installation) or install this individual task by adding to your `deploy.php`:
 
 ```php
-require 'vendor/studio24/deployer-recipes/task/vendors-subpath.php';
+require 'vendor/studio24/deployer-recipes/tasks/vendors-subpath.php';
 ```
 
 ## Configuration
