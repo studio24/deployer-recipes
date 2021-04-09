@@ -2,6 +2,7 @@
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="phpcs.xsd">
 
     <file>src</file>
+    <file>task</file>
 
     <arg name="basepath" value="."/>
     <arg name="colors"/>
@@ -13,7 +14,7 @@
         <type>error</type>
     </rule>
 
-    <!-- Test for PSR2 -->
-    <rule ref="PSR2" />
+    <!-- Test for PSR-12 -->
+    <rule ref="PSR12" />
 
 </ruleset>

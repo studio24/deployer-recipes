@@ -7,7 +7,7 @@ Simple recipe to ask confirmation from user before continuing with deployment.
 Either [install all Studio 24 tasks](../README.md#installation) or install this individual task by adding to your `deploy.php`:
 
 ```php
-require 'vendor/studio24/deployer-recipes/src/confirm-deployment.php';
+require 'vendor/studio24/deployer-recipes/task/confirm-deployment.php';
 ```
 
 ## Configuration
