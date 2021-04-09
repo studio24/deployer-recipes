@@ -7,7 +7,7 @@ Send a notification to Slack on production deploy. **Please note** this task onl
 Either [install all Studio 24 tasks](../README.md#installation) or install this individual task by adding to your `deploy.php`:
 
 ```php
-require 'vendor/studio24/deployer-recipes/task/notify-slack.php';
+require 'vendor/studio24/deployer-recipes/tasks/notify-slack.php';
 ```
 
 ## Configuration
