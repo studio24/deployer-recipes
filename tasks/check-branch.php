@@ -10,7 +10,7 @@ desc('Check the branch to ensure only main/master is deployed to production');
 task('s24:check-branch', function () {
     $stage = get('hostname');
     $branch = get('branch');
-    $default_branch = runlocally("git remote show {{repository}} | grep 'HEAD branch' | cut -d' ' -f5");
+    $default_branch = runlocally("LANG=C git remote show {{repository}} | grep 'HEAD branch' | cut -d' ' -f5");
 
 
 

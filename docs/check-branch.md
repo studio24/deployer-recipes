@@ -53,3 +53,4 @@ which will result in
 Forcing deployment of hotfix to production.
 ✔ Ok
 ```
+This command uses ```LANG=C ``` to ensure the default locale settings for users that are set to different locales. This makes sure that the 'main' branch name is returned correctly from github.
