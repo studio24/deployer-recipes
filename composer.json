@@ -20,9 +20,9 @@
     }
   },
   "require": {
-    "php": ">=7.2",
+    "php": ">=8.0",
     "ext-json": "*",
-    "deployer/deployer": "^6.8",
+    "deployer/deployer": "^7.0.2",
     "symfony/http-client": "^5.2"
   },
   "require-dev": {
