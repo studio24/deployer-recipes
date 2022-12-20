@@ -21,4 +21,5 @@ task('s24:notify-slack', function () {
     $webhook = sprintf('curl -X POST --data-urlencode "payload=%s" %s', str_replace('"', '\"', $payload), $webhook);
     run($webhook);
     writeLn('Slack notification sent');
-})->onStage('production');
+})->select('stage=production');
+
