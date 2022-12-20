@@ -2,10 +2,6 @@
 
 namespace Deployer;
 
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-
 desc('Display the build_summary from the webserver');
 task('s24:show-summary', function () {
     // Check for build file
@@ -89,3 +85,8 @@ task('s24:show-summary', function () {
     }
     writeLn('');
 });
+
+function httpGet()
+{
+
+}
