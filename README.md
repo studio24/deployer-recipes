@@ -6,11 +6,21 @@ Deployer recipes to aid deployment via https://deployer.org
 
 ## Installation
 
-Install via Composer:
+### Deployer 7
+Install via Composer (this loads Deployer v7):
 
 ```
-composer require studio24/deployer-recipes --dev
+composer require studio24/deployer-recipes:^2.0 --dev
 ```  
+
+### Deployer 6
+If you need to use Deployer v6 please use:
+
+```
+composer require studio24/deployer-recipes:^1.1 --dev
+```
+
+### Configuration
 
 Install all Studio 24 Deployer tasks by adding this to your `deploy.php`:
 
@@ -31,21 +41,20 @@ To run deployments please use:
 vendor/bin/dep deploy environment 
 ```
 
-rather than:
+You can also create a shortcut to your local Deployer by adding an alias to your `.nvmrc` file:
 
 ```
-dep deploy environment
+alias dep='vendor/bin/dep'
 ```
 
-If you wish, you can [install vendor binaries to another location](https://getcomposer.org/doc/articles/vendor-binaries.md#can-vendor-binaries-be-installed-somewhere-other-than-vendor-bin-)
-by editing your project composer.json file. For example, to install to `bin` so you can run deployer via `bin/dep`: 
+You can then run `dep` instead of `vendor/bin/dep`
 
-```json
-{
-  "config": {
-    "bin-dir": "bin"
-  }
-}
+### If you have a global Deployer installed
+
+We recommend you do not use global Deployer to avoid any clashes with different Deployer versions. To remove any global installation run:
+
+```
+composer global remove deployer/deployer
 ```
 
 ## Tasks
@@ -77,9 +86,10 @@ Please edit `deploy.php` depending on your needs. For example if you don't need 
 
 ## Requirements
 
-* PHP 7.2+
+* PHP 7.4+ (Deployer 6)
+* PHP 8.0+ (Deployer 7)
 * [Composer](https://getcomposer.org/)
-* [Deployer](https://deployer.org/) 6.8+
+* [Deployer](https://deployer.org/) 
 
 [LICENSE]: ./LICENSE
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg

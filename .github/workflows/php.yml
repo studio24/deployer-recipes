@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['7.3', '7.4']
+        php-versions: ['7.4', '8.0', '8.1', '8.2']
 
     runs-on: ubuntu-latest
 
@@ -42,5 +42,3 @@ jobs:
       - name: Coding standards
         run: ./vendor/bin/phpcs
 
-      - name: PHPUnit
-        run: ./vendor/bin/phpunit
