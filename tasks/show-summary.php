@@ -4,27 +4,14 @@ namespace Deployer;
 
 desc('Display the build_summary from the webserver');
 task('s24:show-summary', function () {
-    // Check for build file
-    $client = HttpClient::create();
-    $buildUrl = get('url') . '/_build_summary.json';
-    $response = $client->request('GET', $buildUrl);
 
-    try {
-        $statusCode = $response->getStatusCode();
-    } catch (TransportExceptionInterface $e) {
+    $response = file_get_contents(get('url') . '/_build_summary.json');
+    if ($response === false) {
         writeLn(sprintf('<comment>The build_summary.json file is unavailable. HTTP transport error: %s</comment>', $e->getMessage()));
-        return;
     }
-
-    if ($statusCode != '200') {
-        writeLn(sprintf('<comment>The build_summary.json file is unavailable with the status code</> <info>%s</> ', $statusCode));
-        return;
-    }
-
-    // Get build file
     try {
-        $json = $response->toArray();
-    } catch (DecodingExceptionInterface $e) {
+        $json = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+    } catch (\JsonException $e) {
         writeLn(sprintf('<comment>Cannot decode JSON build summary from URL %s, error: %s</comment>', $buildUrl, $e->getMessage()));
         return;
     }
@@ -85,8 +72,3 @@ task('s24:show-summary', function () {
     }
     writeLn('');
 });
-
-function httpGet()
-{
-
-}
