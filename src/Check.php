@@ -4,7 +4,6 @@ namespace Studio24\Deployer;
 
 class Check
 {
-
     /**
      * Are we using an installation of Deployer local to your project
      * @param array|null $includedFilePaths
