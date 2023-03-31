@@ -9,7 +9,7 @@ Deployer recipes to aid deployment via https://deployer.org
 Install via Composer:
 
 ```
-composer require studio24/deployer-recipes --dev
+composer require studio24/deployer-recipes:^1.1 --dev
 ```  
 
 Install all Studio 24 Deployer tasks by adding this to your `deploy.php`:
