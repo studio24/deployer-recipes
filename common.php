@@ -17,20 +17,16 @@ require_once __DIR__ . '/tasks/check-local-deployer.php';
 set('remote_user', 'deploy');
 set('http_user', 'apache');
 
-// Make sure we are using Deployer installed via Composer
-before('deploy', 's24:check-local-deployer');
+// Run pre-deployment checks
+task('s24:pre-deploy-checks', [
+    's24:check-local-deployer',
+    's24:check-branch',
+    's24:show-summary',
+    's24:display-disk-space',
+    's24:confirm-continue',
+]);
 
-// Only allow main branch to be deployed to production
-after('s24:check-local-deployer', 's24:check-branch');
-
-// Confirm what was last deployed
-after('s24:check-branch', 's24:show-summary');
-
-// Confirm current disk space
-after('s24:show-summary', 's24:display-disk-space');
-
-// Confirm you want to continue
-after('s24:display-disk-space', 's24:confirm-continue');
+before('deploy', 's24:pre-deploy-checks');
 
 // Update build summary after deployment
 before('deploy:publish', 's24:build-summary');

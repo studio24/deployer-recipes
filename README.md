@@ -6,19 +6,31 @@ Deployer recipes to aid deployment via https://deployer.org
 
 ## Installation
 
-### Deployer 7
-Install via Composer (this loads Deployer v7):
+### Deployer 7 (PHP 8.0+)
+
+Install via Composer:
 
 ```
 composer require studio24/deployer-recipes:^2.0 --dev
 ```  
 
-### Deployer 6
-If you need to use Deployer v6 please use:
+Either setup a new `deploy.php` based on the example. 
+
+Or add the following to your `deploy.php`:
+
+```php
+require 'vendor/studio24/deployer-recipes/common.php';
+```
+
+### Deployer 6 (PHP 7.2 to 7.4)
+
+Install via Composer:
 
 ```
 composer require studio24/deployer-recipes:^1.1 --dev
 ```
+
+See [installation instructions](https://github.com/studio24/deployer-recipes/tree/v1.1.0).
 
 ### Configuration
 

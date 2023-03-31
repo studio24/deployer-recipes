@@ -1,18 +1,40 @@
 <?php
 namespace Deployer;
 
+/**
+ * Deployer recipes we are using for this website
+ */
 require 'recipe/common.php';
-require 'vendor/studio24/deployer-recipes/all.php';
+require 'vendor/studio24/deployer-recipes/common.php';
 
 /**
  * Deployment configuration variables - set on a per-project basis
  */
 
 // Friendly project name
-$project_name = 'Our Test Website';
+set('application', 'Our Test Website');
 
 // The repo for the project
-$repository = 'git@github.com:studio24/xxxxxxxxx.git';
+set('repository', 'git@github.com:studio24/xxx.git');
+
+// Shared files that are not in git and need to persist between deployments (e.g. local config)
+set('shared_files', [
+    'config/wp-config.local.php'
+]);
+
+// Shared directories that are not in git and need to persist between deployments (e.g. uploaded images)
+set('shared_dirs', [
+    'web/wp-content/uploads',
+    '.well-known',
+    'web/wp-content/cache',
+    'var/log'
+]);
+
+// Sets directories as writable (e.g. uploaded images)
+set('writable_dirs', [
+    'web/wp-content/uploads',
+    'web/wp-content/cache'
+]);
 
 // Array of remote => local file locations to sync to your local development computer
 $sync = [
@@ -24,30 +46,9 @@ $sync = [
     ]
 ];
 
-// Shared files that are not in git and need to persist between deployments (e.g. local config)
-$shared_files = [
-    'config/wp-config.local.php'
-];
 
-// Shared directories that are not in git and need to persist between deployments (e.g. uploaded images)
-$shared_directories = [
-    'web/wp-content/uploads',
-    '.well-known',
-    'web/wp-content/cache',
-    'var/log'
-];
-
-// Sets directories as writable (e.g. uploaded images)
-$writable_directories = [
-    'web/wp-content/uploads',
-    'web/wp-content/cache'
-];
-
-// Custom (non-root) composer installs required
-$composer_paths = [
-    'web/wp-content/plugins/s24-wp-image-optimiser'
-];
-
+// Web root
+set('webroot', 'web');
 
 /**
  * Apply configuration to Deployer
@@ -68,8 +69,6 @@ set('http_user', 'apache');
 set('webroot', 'web');
 set('slack_webhook', 'https://hooks.slack.com/services/XXXXX/XXXXX/xxxxxx');
 set('keep_releases', 10);
-set('git_tty', true);
-set('allow_anonymous_stats', false);
 
 // Default stage - prevents accidental deploying to production with dep deploy
 set('default_stage', 'staging');
@@ -97,6 +96,8 @@ host('staging')
  * Deployment task
  * The task that will be run when using dep deploy
  */
+
+runLocally('s24:check-local-deployer');
 
 desc('Deploy ' . get('application'));
 task('deploy', [
