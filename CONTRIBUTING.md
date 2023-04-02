@@ -5,7 +5,7 @@ must accept these license and copyright conditions.
 
 ## Organising code
 
-New tasks must be added to the `tasks/` folder and required in the [`all.php`](all.php) file to ensure it is available for 
+New tasks must be added to the `tasks/` folder and required in the [`recipe/common.php`](all.php) file to ensure it is available for 
 users who load all Studio 24 Deployer tasks.
 
 ## Code must be standalone

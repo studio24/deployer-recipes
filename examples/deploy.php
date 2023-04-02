@@ -2,13 +2,13 @@
 namespace Deployer;
 
 /**
- * Deployer recipes we are using for this website
+ * 1. Deployer recipes we are using for this website
  */
 require 'recipe/common.php';
-require 'vendor/studio24/deployer-recipes/common.php';
+require 'vendor/studio24/deployer-recipes/recipe/common.php';
 
 /**
- * Deployment configuration variables - set on a per-project basis
+ * 2. Deployment configuration variables
  */
 
 // Friendly project name
@@ -17,15 +17,15 @@ set('application', 'Our Test Website');
 // The repo for the project
 set('repository', 'git@github.com:studio24/xxx.git');
 
-// Shared files that are not in git and need to persist between deployments (e.g. local config)
+// Shared files that are not in git and need to persist between deployments (e.g. local .env file)
 set('shared_files', [
     'config/wp-config.local.php'
 ]);
 
 // Shared directories that are not in git and need to persist between deployments (e.g. uploaded images)
 set('shared_dirs', [
-    'web/wp-content/uploads',
     '.well-known',
+    'web/wp-content/uploads',
     'web/wp-content/cache',
     'var/log'
 ]);
@@ -37,64 +37,40 @@ set('writable_dirs', [
 ]);
 
 // Array of remote => local file locations to sync to your local development computer
-$sync = [
+set('sync', [
     'images' => [
         'shared/web/wp-content/uploads/' => 'web/wp-content/uploads'
     ],
     'weblogs' => [
         'data/logs/' => 'logs',
     ]
-];
-
+]);
 
 // Web root
 set('webroot', 'web');
 
-/**
- * Apply configuration to Deployer
- *
- * Don't edit beneath here unless you know what you're doing!
- *
- * DO NOT store the Slack hook in a public repo
- */
-
-
-set('application', $project_name);
-set('repository', $repository);
-set('shared_files', $shared_files);
-set('shared_dirs', $shared_directories);
-set('writable_dirs', $writable_directories);
-set('sync', $sync);
-set('http_user', 'apache');
-set('webroot', 'web');
-set('slack_webhook', 'https://hooks.slack.com/services/XXXXX/XXXXX/xxxxxx');
-set('keep_releases', 10);
-
-// Default stage - prevents accidental deploying to production with dep deploy
-set('default_stage', 'staging');
 
 /**
- * Hosts
+ * 3. Hosts
  */
 
 host('production')
-    ->stage('production')
-    ->user('deploy')
-    ->hostname('123.456.789.10')
-    ->set('deploy_path', '/data/var/www/vhosts/our-site/production')
-    ->set('url', 'https://www.our-website.com');
+    ->set('hostname', '63.34.69.8')
+    ->set('deploy_path', '/data/var/www/vhosts/studio24.net/production')
+    ->set('log_files', '/data/logs/studio24.net.access.log /data/logs/studio24.net.error.log')
+    ->set('url', 'https://www.studio24.net');
 
 host('staging')
-    ->stage('staging')
-    ->user('deploy')
-    ->hostname('123.456.789.10')
-    ->set('deploy_path', '/data/var/www/vhosts/our-site/staging')
-    ->set('url', 'https://staging.our-website.com');
+    ->set('hostname', '63.34.69.8')
+    ->set('deploy_path', '/data/var/www/vhosts/studio24.net/staging')
+    ->set('log_files', '/data/logs/staging.studio24.net.access.log /data/logs/staging.studio24.net.error.log')
+    ->set('url', 'https://staging.studio24.net');
 
 
 /**
- * Deployment task
- * The task that will be run when using dep deploy
+ * 4. Deployment tasks
+ *
+ * Any custom deployment tasks to run
  */
 
 runLocally('s24:check-local-deployer');

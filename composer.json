@@ -16,7 +16,7 @@
   ],
   "require": {
     "php": ">=8.0",
-    "deployer/deployer": "^7.0"
+    "deployer/deployer": "^7.3"
   },
   "require-dev": {
     "overtrue/phplint": "^2.3",

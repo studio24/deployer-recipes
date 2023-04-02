@@ -7,7 +7,7 @@ in a deployment recipe.
 
 ## Usage
 
-Either [install all Studio 24 tasks](../README.md#installation) or install this individual task by adding to your `deploy.php`:
+Either [install all Studio 24 tasks](../installation.md) or install this individual task by adding to your `deploy.php`:
 
 ```php
 require 'vendor/studio24/deployer-recipes/tasks/sync.php';
@@ -23,15 +23,26 @@ Array must be in format: name => [ remote path => local path]
 E.g.
 
 ```php
-$sync = [
+set('sync', [
     'images' => [
         'shared/web/wp-content/uploads/' => 'web/wp-content/uploads'
-    ]
-];
-set('sync', $sync);
+    ],
+]);
 ```
 
 You can setup multiple sync paths.
+
+### Remote path
+
+The remote path is relative to the `deploy_path` (set in your hosts configuration). 
+
+If you want to sync a folder from the current release, prefix with `current/`
+
+If you want to sync a folder from a shared folder, prefix with `shared/`
+
+### Local path
+
+The local path is relative to your project root. 
 
 ## Synching files or folders
 
@@ -49,14 +60,14 @@ If you forget the trailing slash on the remote path it will create a sub-folder 
 To sync files, you can specify the filename in remote and local:
 
 ```php
-'var/log/error.log' => 'logs/error.log'
+'shared/storage/logs/error.log' => 'logs/error.log'
 ```
 
 You can also specify a folder on your local path (you must include a trailing slash), the remote file will then be 
 created in here:
 
 ```php
-'var/log/error.log' => 'logs/'
+'shared/storage/logs/error.log' => 'logs/'
 ```
 
 ## Tasks
@@ -76,6 +87,12 @@ E.g.
 
 ```
 vendor/bin/dep sync staging
+```
+
+You can pass the `--dry-run` option to output the files that will be synched (but not actually run the sync):
+
+```
+vendor/bin/dep sync staging --dry-run
 ```
 
 To sync different file paths, you can use the `--files` option. For example, to sync down a logfile setup the config 

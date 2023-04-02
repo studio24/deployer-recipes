@@ -32,15 +32,14 @@ set('http_user', 'apache');
 
 Runs before the `deploy` task:
 
-* [s24:check-local-deployer](check-local-deployer.md)
-* [s24:check-branch](check-branch.md)
-* [s24:show-summary](show-summary.md)
-* [s24:display-disk-space](display-disk-space.md)
-* [s24:confirm-continue](confirm-continue.md)
+* [s24:check-branch](tasks/check-branch.md)
+* [s24:show-summary](tasks/show-summary.md)
+* [s24:display-disk-space](tasks/display-disk-space.md)
+* [s24:confirm-continue](tasks/confirm-continue.md)
 
 ### s24:build-summary
 
-The [s24:build-summary](build-summary.md) task runs before the `deploy:publish` task.
+The [s24:build-summary](tasks/build-summary.md) task runs before the `deploy:publish` task.
 
 ### deploy:unlock
 
