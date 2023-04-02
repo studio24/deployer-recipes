@@ -14,7 +14,9 @@ task('sync', function () {
     $dryRun = false;
     if (input()->hasOption('dry-run')) {
         $dryRun = input()->getOption('dry-run');
-        writeln("<info>Dry-run mode</info>");
+    }
+    if ($dryRun) {
+        info("Dry-run mode");
     }
 
     // What files do we want to sync?
@@ -32,7 +34,7 @@ task('sync', function () {
     }
 
     if (!isset($sync[$files])) {
-        writeLn(sprintf("<error>File name '%s' not found in config setting 'sync', exiting!</error>", $files));
+        warning(sprintf("File name '%s' not found in config setting 'sync', exiting!", $files));
         return;
     }
     $remote = key($sync[$files]);
@@ -53,16 +55,10 @@ task('sync', function () {
         $command = "rsync -av --dry-run {$user}@{$host}:{$deployPath}/{$remote} {$local}";
     }
 
-    writeln(' ');
-    if (preg_match('/\/$/', $remote)) {
-        writeln("<info>Downloading folder from $remote ({{alias}}) to $local (local dev)</info>");
-    } else {
-        writeln("<info>Downloading file from $remote ({{alias}}) to $local (local dev)</info>");
-    }
+    info("Downloading $remote ({{alias}}) to $local (local dev)");
     if (output()->isVerbose()) {
-        writeln('<info>Rsync command: ' . $command . '</info>');
+        info('Rsync command: ' . $command);
     }
-    writeln(' ');
 
     if (!askConfirmation('Continue with sync operation?')) {
         warning('OK, sync cancelled.');
@@ -72,5 +68,5 @@ task('sync', function () {
     output()->write(runLocally($command));
 
     writeln(' ');
-    writeln("<info>Files successfully synched to $local (local dev)</info>");
+    info("Files successfully synchronised to $local (local dev)");
 });

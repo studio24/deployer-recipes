@@ -90,6 +90,42 @@ Where possible, use a default Deployer recipe and set custom tasks via before an
 
 See [examples](../examples).
 
+All Studio 24 custom tasks have had the `s24:` prefix removed.
+
+#### Composer subpaths
+
+Set the custom Composer paths:
+
+````php
+// Custom (non-root) composer installs required
+set('composer_paths', [
+    'web/wp-content/plugins/s24-wp-image-optimiser'
+]);
+````
+
+And add a custom task to run after deployment:
+
+```php
+// Install composer dependencies in subpaths
+before('deploy:publish', 'vendors-subpath');
+```
+
+#### Slack notifications
+
+Set the Slack webhook:
+
+```php
+// Slack webhook
+set('slack_webhook', 'https://hooks.slack.com/services/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');
+```
+
+And add a custom task to run after successful deployment:
+
+```php
+// Notify Slack on deployment
+after('deploy:success', 'slack:notify:success');
+```
+
 ### A note on release numbers
 
 Release numbers reset in v7, if you want to retain the same release numbers first find out the current release, then

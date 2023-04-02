@@ -14,30 +14,16 @@ No configuration required
 
 ## Tasks
 
-- `s24:display-disk-space` – checks the disk usage of the target server and displays the results
-
+- `display-disk-space` – checks the disk usage of the target server and displays the results
 
 ## Usage
 
-Add task to your `deploy.php` script:  
-**Note:** it is suggested to use in conjunction with [confirm deployemnt](confirm-deployment.md)
+This automatically runs in the pre deploy tasks.
 
-```
-task('deploy', [
-    ...
-    // Add after deploy:info
-    'deploy:info',
+Returns a summary of disk usage to the terminal (excluding temp drives) as below:
 
-    's24:check-drive-space',
-    's24:confirm',    
-    ...
-]);
-```
-
-Returns a summary of disk usage to the terminal (excluding temp drives) as below 
 ```
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/nvme0n1p1  8.0G  4.0G  4.1G  50% /
 /dev/nvme1n1     40G   27G   14G  68% /data
-
 ```

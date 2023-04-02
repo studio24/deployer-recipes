@@ -15,29 +15,23 @@ No configuration is required.
 
 ## Tasks
 
-- `studio24:show-summary` – retrieves current deployment info and displays in the terminal
+- `show-summary` – retrieves current deployment info and displays in the terminal
 
 ## Usage
   
 Run on any environment to display current deploy information   
 
 ```
-vendor/bin/dep studio24:show-summary environment
+dep show-summary <environment>
 ```  
 
 eg:
 ```
-vendor/bin/dep studio24:show-summary production
+dep show-summary production
 ```  
 
-This returns a response of
+This returns a response detailing what is deployed to production.
 
-```
-Build Summary:
- 
-Currently deployed branch on the production environment is master, deployed on Wednesday, March 03 at 04:54PM by Alan Isaacson (alan@studio24.net).
-
-```
 
 
 

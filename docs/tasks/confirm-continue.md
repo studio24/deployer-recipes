@@ -15,18 +15,18 @@ No configuration required.
 
 ## Tasks
 
-- `s24:confirm-continue` – Requires user input to continue y/N (Default N)
-
+- `confirm-continue` – Requires user input to continue y/N (Default N)
 
 ## Usage
 
-Add task to your `deploy.php` script whereever confirmation is required:  
+This automatically runs in the pre deploy tasks.
+
+You can also add this task to your `deploy.php` script wherever confirmation is required:  
 
 ```
-task('deploy', [
+task('my-task', [
     ...
-
-    's24:confirm-deployment',    
+    'confirm-continue',    
     ...
 ]);
 ```

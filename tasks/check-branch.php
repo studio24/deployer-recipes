@@ -2,12 +2,13 @@
 
 namespace Deployer;
 
+use Deployer\Exception\Exception;
 use Symfony\Component\Console\Input\InputOption;
 
-option('force', null, InputOption::VALUE_NONE, 'Forces deployment of a not main branch to production.', null);
+option('force', null, InputOption::VALUE_NONE, 'Forces deployment of a not main branch to production.');
 
 desc('Check the branch to ensure only main/master is deployed to production');
-task('s24:check-branch', function () {
+task('check-branch', function () {
     $alias = get('alias');
     $target = get('target');
     $defaultBranch = runLocally("git remote show {{repository}} | grep 'HEAD branch' | cut -d' ' -f5");
@@ -17,18 +18,23 @@ task('s24:check-branch', function () {
         $forceDeploy = input()->getOption('force');
     }
 
+    // If target = HEAD, set to the default branch (so we know what is deployed)
+    if ($target === 'HEAD') {
+        set('branch', $defaultBranch);
+        set('target', $defaultBranch);
+        $target = get('target');
+        info(sprintf('Setting deployment branch to <fg=blue;options=bold>%s</>', $defaultBranch));
+    }
+
+    // Only allow default branch to be deployed to production, unless forced
     if ($alias === 'production' && $target !== $defaultBranch) {
         if ($forceDeploy === true) {
-            writeln("<fg=blue;options=bold>Forcing deployment of <fg=red;options=bold>$target</> <fg=blue;options=bold>to $alias.</>");
-        } else {
-            writeln("<fg=blue;options=bold>You cannot deploy </><fg=red;options=bold>$target </> <fg=blue;options=bold>to </><fg=yellow;options=bold>$alias</>");
-            invoke('deploy:failed');
-            throw new \RuntimeException("Deployment abandoned");
+            warning("Forcing deployment of <options=bold>$target</> to <options=bold>$alias.</>");
+            return;
         }
-    } else {
-        writeln(" ");
-        writeln("<fg=green;options=bold>The $target branch is OK to deploy to $alias</>");
-        writeln("<fg=blue;options=bold>Continuing with deployment</>");
-    }
-});
 
+        throw error("You cannot deploy <options=bold>$target</> to <options=bold>$alias</>");
+    }
+
+    info("The $target branch is OK to deploy to $alias");
+});

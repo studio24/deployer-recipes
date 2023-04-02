@@ -15,41 +15,13 @@ No configuration required
 
 ## Tasks
 
-- `s24:check-branch` – checks which stage and branch you are trying to deploy to. Ensures that non main branches deployed to production have to be forced.
-
+- `check-branch` – checks which stage and branch you are trying to deploy to. Ensures that non main branches deployed to production have to be forced.
 
 ## Usage
 
-Add task to your `deploy.php` script:  
-**Note:** it is suggested to use in conjunction with [confirm continue](confirm-continue.md)
+This automatically runs in the pre deploy tasks.
 
-```
-task('deploy', [
-    ...
-    // Add after deploy:info
-    'deploy:info',
-
-    's24:check-branch',
-    's24:confirm-continue',    
-    ...
-]);
-```
-
-Default protection result
-```
-vendor/bin/dep deploy production --branch=hotfix
-```
-will result in the exception
-```
-You cannot deploy hotfix  to production
-  Deployment abandoned  
-```
-To force a non main branch to be deployed use
-```
-vendor/bin/dep deploy production --branch=hotfix --force=true
-```
-which will result in 
-```
-Forcing deployment of hotfix to production.
-✔ Ok
-```
+This:
+* Ensures only the default branch is deployed to production
+* Allows you to deploy non-default branches to production with --force
+* Sets the correct branch and target (to the default branch) if no branch is passsed

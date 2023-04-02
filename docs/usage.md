@@ -53,20 +53,35 @@ To run deployments use:
 dep deploy <environment> --branch=<branch name> 
 ```
 
+If you don't specify a branch, then it defaults to the default branch (main / master).
+
 E.g. to deploy the `feature/new-thing` branch to staging:
 
 ```
 dep deploy staging --branch=feature/new-thing 
 ```
 
-To deploy the main (default) branch to production:
+To deploy the default (main) branch to production:
 
 ```
-dep deploy production 
+dep deploy production
 ```
 
-Please note you can only deploy the default branch to production (usually main), you can override this behaviour by 
-passing the `--force` option.
+Please note you cannot deploy non-default branches to production unless you pass the `--force` option.
+
+## View what is deployed to an environment
+
+To run the show summary task use the format: 
+
+```
+dep show-summary <environment>
+```
+
+E.g. to see what's deployed to staging:
+
+```
+dep show-summary staging
+```
 
 ## Rolling back a deployment
 
@@ -100,5 +115,22 @@ dep logs:app staging
 
 ## Synching files to local dev
 
+To sync files locally you need to setup sync settings in your `deploy.php` file.
+
+```
+dep sync 
+```
 
 ## SSHing to a remote server
+
+Connect to a remote server via:
+
+```php
+dep ssh <environment>   
+```
+
+E.g. to connect to staging:
+
+``` 
+dep ssh staging
+```
