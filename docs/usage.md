@@ -117,9 +117,15 @@ dep logs:app staging
 
 To sync files locally you need to setup sync settings in your `deploy.php` file.
 
+You can run sync via:
+
 ```
-dep sync 
+dep sync <name>
 ```
+
+If you only have one sync setup, or you want to run the first sync task, then you don't need to pass a name.
+
+See [sync documentation](tasks/sync.md).
 
 ## SSHing to a remote server
 
