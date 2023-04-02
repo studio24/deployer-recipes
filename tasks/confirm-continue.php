@@ -8,4 +8,3 @@ task('confirm-continue', function () {
         throw error('Deployment aborted');
     }
 });
-
