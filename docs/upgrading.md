@@ -39,7 +39,7 @@ require 'vendor/studio24/deployer-recipes/all.php';
 with:
 
 ```php
-require 'vendor/studio24/deployer-recipes/common.php';
+require 'vendor/studio24/deployer-recipes/recipe/common.php';
 ```
 
 ### Configuration
@@ -78,7 +78,7 @@ Simplify host setup:
 * Environment should be set as the host value (the host alias)
 * Remove stage
 * Remove user
-* Add log_files setting to enable users to view log files via `dep logs:app production`
+* Add log_files setting to enable users to view log files via `dep logs:app <environment>`
 
 Example:
 
@@ -145,20 +145,26 @@ on your first deployment using Deployer 7 manually set the release number. E.g. 
 ./vendor/bin/dep deploy staging -o release_name=42
 ```
 
-See [upgrade docs](https://deployer.org/docs/7.x/UPGRADE#step-2-deploy)
+See [Deployer upgrade docs](https://deployer.org/docs/7.x/UPGRADE#step-2-deploy)
 
 ### Test a deployment
 
 Can you connect via SSH?
 
 ```
-./vendor/bin/dep ssh
+dep ssh
+```
+
+Can you view the current deployment info?
+
+```
+dep deploy show-summary staging
 ```
 
 Can you deploy to staging?
 
 ```
-./vendor/bin/dep deploy staging
+dep deploy staging
 ```
 
 ### Clean up
