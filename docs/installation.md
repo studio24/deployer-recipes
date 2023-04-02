@@ -203,7 +203,7 @@ And add this task to run:
 
 ```php
 // Custom (non-root) composer installs
-after('deploy:prepare', 's24:vendors-subpath');
+after('deploy:prepare', 'vendors-subpath');
 ```
 
 Please note it is recommended to only use Composer in the project root folder to avoid clashes between package versions.

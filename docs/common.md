@@ -28,18 +28,18 @@ set('http_user', 'apache');
 
 ## Tasks
 
-### s24:pre-deploy-checks
+### pre-deploy-checks
 
 Runs before the `deploy` task:
 
-* [s24:check-branch](tasks/check-branch.md)
-* [s24:show-summary](tasks/show-summary.md)
-* [s24:display-disk-space](tasks/display-disk-space.md)
-* [s24:confirm-continue](tasks/confirm-continue.md)
+* [check-branch](tasks/check-branch.md)
+* [show-summary](tasks/show-summary.md)
+* [display-disk-space](tasks/display-disk-space.md)
+* [confirm-continue](tasks/confirm-continue.md)
 
-### s24:build-summary
+### build-summary
 
-The [s24:build-summary](tasks/build-summary.md) task runs before the `deploy:publish` task.
+The [build-summary](tasks/build-summary.md) task runs before the `deploy:publish` task.
 
 ### deploy:unlock
 

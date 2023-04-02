@@ -73,48 +73,11 @@ host('staging')
  * Any custom deployment tasks to run
  */
 
-runLocally('s24:check-local-deployer');
+// Install composer dependencies in subpaths
+before('deploy:publish', 'vendors-subpath');
 
-desc('Deploy ' . get('application'));
-task('deploy', [
-
-    // Check that we are using local deployer
-    's24:check-local-deployer',
-
-    // Run initial checks
-    'deploy:info',
-    's24:check-branch',
-    's24:show-summary',
-    's24:display-disk-space',
-
-    // Request confirmation to continue (default N)
-    's24:confirm-continue',
-
-    // Deploy site
-    'deploy:prepare',
-    'deploy:lock',
-    'deploy:release',
-    'deploy:update_code',
-
-    // Composer install
-    'deploy:vendors',
-
-    'deploy:shared',
-    'deploy:writable',
-    'deploy:clear_paths',
-    's24:build-summary',
-
-    // Build complete, deploy is live once deploy:symlink runs
-    'deploy:symlink',
-
-    // Cleanup
-    'deploy:unlock',
-    'cleanup',
-    'success'
-]);
-
-// Slack notification on successful deploy to prod
-after('success', 's24:notify-slack');
-
-// Add unlock to failed deployment event.
-after('deploy:failed', 'deploy:unlock');
+// Notify Slack on deployment
+// @todo this doesn't appear to work
+set('slack_channel', 'deployments');
+before('deploy', 'slack:notify');
+after('deploy:success', 'slack:notify:success');
