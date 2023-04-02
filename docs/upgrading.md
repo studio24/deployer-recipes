@@ -4,7 +4,17 @@
 
 See full [installation instructions](installation.md).
 
-### Example file
+### Use v2.0 release
+
+You need to ensure you are using PHP 8.0+
+
+Update your composer.json file to use the v2.0 release:
+
+```
+composer require studio24/deployer-recipes:^2.0 --dev
+```  
+
+### Example deploy.php file
 
 It's recommended you rename your existing deployment file for reference:
 

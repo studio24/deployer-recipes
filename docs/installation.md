@@ -2,7 +2,15 @@
 
 How to create a `deploy.php` file for your project.
 
-## Example file
+## Composer
+
+Install via Composer:
+
+```
+composer require studio24/deployer-recipes:^2.0 --dev
+```  
+
+## Example deploy.php file
 
 You can copy an example [deploy.php](../examples/deploy.php) file to your project to help start you off:
 
