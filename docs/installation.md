@@ -168,12 +168,12 @@ task('post-deploy-tasks', [
 after('deploy:success', 'post-deploy-tasks');
 ```
 
-### Slack notifications on successful deployment
+### Slack notifications
 
 We use the [Slack recipe](https://deployer.org/docs/7.x/contrib/slack) to send Slack notifications to the #deployments 
-channel on successful deploys. 
+channel.
 
-Add [Deployer to Slack](https://deployer.org/docs/7.x/contrib/slack).
+First add [Deployer to Slack](https://deployer.org/docs/7.x/contrib/slack).
 
 Add the Studio 24 Slack recipe, which contains our common setup for Slack notifications:
 
