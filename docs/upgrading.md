@@ -122,18 +122,17 @@ before('deploy:publish', 'vendors-subpath');
 
 #### Slack notifications
 
-Set the Slack webhook:
+Add the Slack recipe:
+
+```php
+require 'vendor/studio24/deployer-recipes/recipe/slack.php';
+```
+
+Set the Slack webhook to deploy.php:
 
 ```php
 // Slack webhook
 set('slack_webhook', 'https://hooks.slack.com/services/xxx/xxx/xxx');
-```
-
-And add a custom task to run after successful deployment:
-
-```php
-// Notify Slack on deployment
-after('deploy:success', 'slack:notify:success');
 ```
 
 ### A note on release numbers

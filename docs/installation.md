@@ -175,17 +175,16 @@ channel on successful deploys.
 
 Add [Deployer to Slack](https://deployer.org/docs/7.x/contrib/slack).
 
-Set the Slack webhook URL in configuration:
+Add the Studio 24 Slack recipe, which contains our common setup for Slack notifications:
+
+```php
+require 'vendor/studio24/deployer-recipes/recipe/slack.php';
+```
+
+Set the Slack webhook URL in your deploy.php configuration:
 
 ```php
 set('slack_webhook', 'https://hooks.slack.com/services/xxx/xxx/xxx');
-```
-
-Add the Slack notify task:
-
-```php
-// Notify Slack on deployment
-after('deploy:success', 'slack:notify:success');
 ```
 
 ### Composer in sub-paths
