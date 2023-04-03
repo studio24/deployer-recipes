@@ -173,6 +173,8 @@ after('deploy:success', 'post-deploy-tasks');
 We use the [Slack recipe](https://deployer.org/docs/7.x/contrib/slack) to send Slack notifications to the #deployments 
 channel on successful deploys. 
 
+Add [Deployer to Slack](https://deployer.org/docs/7.x/contrib/slack).
+
 Set the Slack webhook URL in configuration:
 
 ```php

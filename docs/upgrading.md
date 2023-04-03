@@ -126,7 +126,7 @@ Set the Slack webhook:
 
 ```php
 // Slack webhook
-set('slack_webhook', 'https://hooks.slack.com/services/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');
+set('slack_webhook', 'https://hooks.slack.com/services/xxx/xxx/xxx');
 ```
 
 And add a custom task to run after successful deployment:
