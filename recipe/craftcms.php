@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-require_once 'recipe/craftcms.php';
+// require_once 'recipe/craftcms.php';
 require_once __DIR__ . '/common.php';
 
 // Shared files that are not in git and need to persist between deployments (e.g. local config)
@@ -73,6 +73,16 @@ task('craft:deploy', function() {
     writeln('Migrating Craft content');
     output()->write(run("php craft migrate --track=content --interactive=0"));
  });
+
+ desc('Clear all Craft caches');
+ task('craft:clear-cache', function () {
+     $path = get('release_path');
+ 
+     writeln('Running Craft clear-caches/all');
+     output()->write(run("cd $path && php craft clear-caches/all"));
+     writeln('Caches cleared');
+ }
+ );
 
 // Deployment task
 
