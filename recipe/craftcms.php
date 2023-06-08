@@ -10,17 +10,16 @@ set('shared_files', ['.env']);
 
 // Shared directories that are not in git and need to persist between deployments (e.g. uploaded images)
 set('shared_dirs', [
-    'storage',
-    'web/cpresources',
+    'storage/logs',
     'migrations',
 ]);
 
-set('webroot', 'web');
-set('git_ssh_command', 'ssh');
-
-add('writable_dirs', [
+set('writable_dirs', [
     'config/project',
-    'storage',
+    'storage/backups',
+    'storage/config-deltas',
+    'storage/rebrand',
+    'storage/runtime',
     'web/cpresources',
 ]);
 
@@ -48,6 +47,15 @@ task('craft:restore-db', function () {
 }
 );
 
+desc('Craft storage: reset storage permissions');
+task('craft:storage', function () {
+    $path = get('release_path');
+
+    writeln('Changing storage dir permissions');
+    output()->write(run("cd $path && setfacl -L -m u:\"www-data\":rwX -m u:studio24:rwX storage"));
+    writeln('Permissions updated');
+}
+);
 
 desc('Remind user to update remote .env before continuing');
 task('env-reminder', function () {
@@ -64,14 +72,15 @@ task('env-reminder', function () {
 
 desc('Running Craft recommended deployment steps');
 task('craft:deploy', function() {
+    $path = get('release_path');
     writeln('Running Craft deployment steps');
     writeln('Running Craft migrations');
-    output()->write(run("php craft migrate/up --interactive=0"));
-    output()->write(run("php craft migrate/all --no-content --interactive=0"));
+    output()->write(run("cd $path && php craft migrate/up --interactive=0"));
+    output()->write(run("cd $path && php craft migrate/all --no-content --interactive=0"));
     writeln('Applying Craft project config');
-    output()->write(run("php craft project-config/apply"));
+    output()->write(run("cd $path && php craft project-config/apply"));
     writeln('Migrating Craft content');
-    output()->write(run("php craft migrate --track=content --interactive=0"));
+    output()->write(run("cd $path && php craft migrate --track=content --interactive=0"));
  });
 
  desc('Clear all Craft caches');
@@ -83,7 +92,6 @@ task('craft:deploy', function() {
      writeln('Caches cleared');
  }
  );
-
 // Deployment task
 
 desc('deploy');
@@ -92,6 +100,7 @@ task('deploy', [
     'env-reminder',
     'craft:backup-db',
     'deploy:vendors',
+    'craft:storage',
     'craft:deploy',
     'craft:clear-cache',
     'deploy:clear_paths',
