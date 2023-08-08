@@ -11,10 +11,6 @@ require_once __DIR__ . '/../tasks/confirm-continue.php';
 require_once __DIR__ . '/../tasks/display-disk-space.php';
 require_once __DIR__ . '/../tasks/vendors-subpath.php';
 
-// Set up defaults
-set('remote_user', 'deploy');
-set('http_user', 'apache');
-
 // Run pre-deployment checks
 task('pre-deploy-checks', [
     'check-branch',

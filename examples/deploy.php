@@ -46,6 +46,10 @@ set('sync', [
     ]
 ]);
 
+// Set up default Deployment user and Apache user
+set('remote_user', 'deploy');
+set('http_user', 'apache');
+
 // Web root
 set('webroot', 'web');
 
