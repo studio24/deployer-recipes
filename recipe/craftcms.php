@@ -50,9 +50,12 @@ task('craft:restore-db', function () {
 desc('Craft storage: reset storage permissions');
 task('craft:storage', function () {
     $path = get('release_path');
+    
+    $http_user = get('http_user');
+    $remote_user = get('remote_user');
 
     writeln('Changing storage dir permissions');
-    output()->write(run("cd $path && setfacl -L -m u:\"www-data\":rwX -m u:studio24:rwX storage"));
+    output()->write(run("cd $path && setfacl -L -m u:\"$http_user\":rwX -m u:$remote_user:rwX storage"));
     writeln('Permissions updated');
 }
 );
