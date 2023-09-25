@@ -12,6 +12,7 @@ set('shared_files', ['.env']);
 set('shared_dirs', [
     'storage/logs',
     'migrations',
+    'db-backups'
 ]);
 
 set('writable_dirs', [
