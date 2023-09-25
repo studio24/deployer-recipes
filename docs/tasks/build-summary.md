@@ -4,35 +4,23 @@ Creates a summary of current build information to preview what is currently depl
 
 ## Usage
 
-Either [install all Studio 24 tasks](../README.md#installation) or install this individual task by adding to your `deploy.php`:
+Either [install all Studio 24 tasks](../installation.md) or install this individual task by adding to your `deploy.php`:
 
 ```php
 require 'vendor/studio24/deployer-recipes/tasks/build-summary.php';
 ```
 
 ## Configuration
-No configuration is required.
+You need to ensure webroot is set in your `deploy.php` file.
 
 ## Tasks
 
-- `s24:build-summary` – retrieves current deployment info and creates a `_build_summary.json` file in the web root
+- `build-summary` – retrieves current deployment info and creates a `_build_summary.json` file in the web root
 
 ## Usage
 
-Add task to your `deploy.php` script:
-
-```
-task('deploy', [
-    ...
-    // Add before deploy:symlink
-    'studio24:build-summary',
-    
-    'deploy:symlink',
-    ...
-]);
-```
-
-This creates a file containing:
+This automatically runs after deploy:publish and creates a JSON file containing:
+* 
 * Current environment
 * The current build date & time
 * The currently deployed branch
