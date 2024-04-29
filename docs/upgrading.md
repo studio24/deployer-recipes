@@ -1,10 +1,8 @@
 # Updrading
 
-## Upgrading to Deployer 7 (v2.0 of deployer-recipes)
+## Upgrading to v2 (Deployer 7)
 
-See full [installation instructions](installation.md).
-
-### Use v2.0 release
+### Use v2 release
 
 You need to ensure you are using PHP 8.0+
 
@@ -22,11 +20,8 @@ It's recommended you rename your existing deployment file for reference:
 cp deploy.php deploy.v1.php
 ```
 
-You can then copy the new example deployment file:
-
-```
-cp vendor/studio24/deployer-recipes/examples/deploy.php ./deploy.php
-```
+You can then copy an example deployment file (see [installation](installation.md)). 
+You can copy your existing setup into this new file.
 
 ### Recipe
 

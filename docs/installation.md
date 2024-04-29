@@ -1,95 +1,135 @@
 # Installation
 
-How to create a `deploy.php` file for your project.
-
 ## Composer
 
-Install via Composer:
+Install via Composer in your project:
 
 ```
 composer require studio24/deployer-recipes:^2.0 --dev
 ```  
 
-## Example deploy.php file
+## Deployer recipes
 
-You can copy an example [deploy.php](../examples/deploy.php) file to your project to help start you off:
+We create custom recipes for Studio 24 usage, making use of standard Deployer recipes where these work for us. Take a look
+at the recipe source code to see what it does and what defaults it sets. You can override the defaults in your deploy.php file if you need to.
+
+If an example deploy file doesn't exist for your platform you can add one to the [deployer-recipes](https://github.com/studio24/deployer-recipes) repo.
+
+## Create a deploy.php file
+
+The `deploy.php` file is used to store configuration for deployment. You can copy an example file to your project to help start you off.
+
+### Default: 
 
 ```
-cp vendor/studio24/deployer-recipes/examples/deploy.php ./deploy.php
+cp vendor/studio24/deployer-recipes/examples/default.php ./deploy.php
 ```
+
+[Source](../recipe/default.php).
+
+### Craft CMS:
+
+```
+cp vendor/studio24/deployer-recipes/examples/craft-cms.php ./deploy.php
+```
+
+[Source](../recipe/craft-cms.php).
+
+### Laravel:
+
+```
+cp vendor/studio24/deployer-recipes/examples/laravel.php ./deploy.php
+```
+
+[Source](../recipe/laravel.php).
+
+### Symfony:
+
+```
+cp vendor/studio24/deployer-recipes/examples/symfony.php ./deploy.php
+```
+
+[Source](../recipe/symfony.php).
+
+### WordPress
+
+```
+cp vendor/studio24/deployer-recipes/examples/wordpress.php ./deploy.php
+```
+
+[Source](../recipe/wordpress.php).
+
+## Edit the deploy.php file
+
+The example deploy file contains setup and defaults for the platform you are using, you will need to review this and update it for your specific project. 
+
+**Note:** please make sure you remove any config that is not used for your project.
+
+The different sections of the deploy file are explained below.
 
 ## 1. Deployer recipe
 
-It is recommended you use a standard Deployer recipe as the base for your deploy script.
-
-The example deploy.php script requires the standard Deployer [commmon](https://deployer.org/docs/7.x/recipe/common) recipe. 
-You can replace this for another Deployer recipe to match your project. 
-
-Default value:
-
-```php
-require 'recipe/common.php';
-```
-
-This should be followed by the Studio 24 Deployer recipe common file:
-
-```php
-require 'vendor/studio24/deployer-recipes/recipe/common.php';
-```
-
-Deployer contains [recipes for many standard PHP frameworks](https://deployer.org/docs/7.x/recipe) (some are detailed below).
-
-Please note it is not recommended to use the Deployer WordPress recipe.
-
-### Composer
-
-Runs [composer install](https://deployer.org/docs/7.x/recipe/composer) (to your project root) during deployment.
-
-```
-require 'recipe/composer.php';
-```
-
-### CraftCMS
-
-Deploys [CraftCMS](https://deployer.org/docs/7.x/recipe/craftcms).
-
-```php
-require 'recipe/craftcms.php';
-```
+The Deployer recipe the deploy script is based on. 
 
 ## 2. Deployment configuration variables
 
-There are a number of `set()` function calls which are used in Deployer to set configuration values. 
+Configuration variables are set up using the `set()` function. You'll need to edit these.
 
-* application - your application name
-* repository - GitHub repo URL, please ensure this uses the SSH URL, e.g. git@github.com:studio24/project-name.git
-* webroot - document root for the website, usually web or public
+* `application` - your application name
+* `repository` - GitHub repo URL, please ensure this uses the SSH URL, e.g. git@github.com:studio24/project-name.git
+* `http_user` - HTTP user that the webserver runs as (when we use PHP-FPM this is normally `production` or `staging`), remove this if you're not using PHP-FPM
+* `log_files` - Path to log files, separate multiple files with a comma
+
+Settings that you shouldn't need to change:
+
+* `remote_user` - remote user to login via SSH to deploy files
+* `webroot` - document root for the website, usually web or public
+
+#### .env file
+
+You can use a `.env` file to store sensitive information. This is loaded in the deploy.php file via:
+
+```
+set('dotenv', '{{current_path}}/.env');
+```
+
+You can then use environment variables in your deploy.php file. 
+
+For example, if you have the environment variable `API_KEY` in your `.env` file:
+
+```
+API_KEY=abc123
+```
+
+You can reference this in your deploy.php file like so:
+
+```
+getenv('API_KEY');
+```
 
 ### shared_files
 
-If your web application has persistent files, that need to not change between deployments, set 
-these up as `shared_files`
+The `shared_files` setting defines shared files that need to persist between deployments. These should be excluded from git. 
 
-Examples include your local `.env` config file.
+Examples include a local `.env` config file.
 
 ### shared_dirs
 
-If your web application has persistent folders, that need to not change between deployments, set
-these up as `shared_dirs`
+The `shared_dirs` setting defines shared folders that need to persist between deployments. These should be excluded from git, 
+or optionally you can include the folder in git but exclude the contents.
 
 Examples include storage folder for logs, or image upload folders.
 
 ### writable_dirs
 
-If your web application needs to write files to a folder, make sure you set it up in 
-`writable_dirs` to ensure the webserver has permission to write files. 
+The `writable_dirs` setting defines folders that the webserver needs to write to. 
 
 Examples include storage folder for logs, or image upload folders.
 
 ### sync
 
 If you need to be able to copy files from the remote server to your local Mac, then you can set 
-this up via `sync`.
+this up via `sync`. 
 
 The format is:
 
@@ -101,28 +141,22 @@ set('sync', [
 ]);
 ```
 
-You can then sync files via:
-
-```
-./vendor/bin/dep sync name
-```
-
 See [sync documentation](tasks/sync.md).
-
-### git_ssh_command
-
-If your webserver is using OpenSSH version older than v7.6, updating the code may fail with the error message 
-_unsupported option "accept-new"_. In this case, override the Git SSH command with:
-
-```php
-set('git_ssh_command', 'ssh');
-```
 
 ## 3. Hosts
 
-Set up the host settings to enable Deployer to publish files over SSH.
+The host settings to enable Deployer to publish files over SSH. You will need to edit these.
 
-Eac host statement should look like:
+The format of the host settings is:
+
+```php
+host('[environment name]')
+    ->set('hostname', '[ip address]')
+    ->set('deploy_path', '/path/to/[environment]')
+    ->set('url', '[website url]');
+```
+
+An example:
 
 ```php
 host('production')
@@ -133,9 +167,9 @@ host('production')
 
 The key information you need to set is:
 
-* `host('production')` - The host alias, or environment name
-* `hostname` - The hostname, or host IP address
-* `deploy_path` - The path to deploy files to
+* `host('[environment name]')` - Environment name
+* `hostname` - Hostname or IP address to deploy to
+* `deploy_path` - Path to deploy files to
 * `log_files` - Path to log files (optional)
 * `url` - The URL of the website
 
@@ -145,8 +179,20 @@ See [hosts documentation](https://deployer.org/docs/7.x/hosts).
 
 ## 4. Deployment tasks
 
-We recommend leaving the default tasks as defined in the Deployer recipe and using the [before](https://deployer.org/docs/7.x/api#before) 
-and [after](https://deployer.org/docs/7.x/api#after) functions to add other tasks to run. 
+### Running a custom task
+We recommend leaving the default tasks as defined in the Deployer recipe and using the [before()](https://deployer.org/docs/7.x/api#before) 
+and [after()](https://deployer.org/docs/7.x/api#after) functions to add other tasks to run at certain points in the deployment process.
+
+E.g. 
+
+```
+task('my-custom-task', function () {
+    // do something
+});
+after('deploy:success', 'my-custom-task');
+```
+
+You can see the different deployment steps in the recipe documentation. 
 
 You can refer to the Deployer recipe source code to review when to run a custom task. Some key tasks:
 
@@ -157,39 +203,18 @@ You can refer to the Deployer recipe source code to review when to run a custom 
 
 ### Running multiple tasks
 
-If you call the before or after function multiple times for the same task, then it will override previous calls. To run 
-multiple tasks  you need to create a custom task which you can pass an array of tasks to run. E.g.
+If you call the before() or after() function multiple times for the same task, then it will override previous calls. 
+To run multiple tasks just create a custom task which you can pass an array of tasks to run. E.g.
 
 ```php
 task('post-deploy-tasks', [
     'slack:notify:success',
-    'some-other-task'
+    'my-custom-task'
 ]);
 after('deploy:success', 'post-deploy-tasks');
 ```
 
-### Slack notifications
-
-We use the [Slack recipe](https://deployer.org/docs/7.x/contrib/slack) to send Slack notifications to the #deployments 
-channel.
-
-First add [Deployer to Slack](https://deployer.org/docs/7.x/contrib/slack).
-
-Add the Studio 24 Slack recipe, which contains our common setup for Slack notifications:
-
-```php
-require 'vendor/studio24/deployer-recipes/recipe/slack.php';
-```
-
-Set the Slack webhook URL in your deploy.php configuration:
-
-```php
-set('slack_webhook', 'https://hooks.slack.com/services/xxx/xxx/xxx');
-```
-
 ### Composer in sub-paths
-
-#### Composer in sub-paths
 
 If you need to run Composer in a sub-path, e.g. a WordPress plugin, add the following configuration:
 

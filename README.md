@@ -1,6 +1,6 @@
 # Deployer recipes
 
-[Deployer](https://deployer.org/) recipes used to help deployment for Studio 24 projects.   
+This package contains [Deployer](https://deployer.org/) recipes used to help deploy Studio 24 projects.   
 
 [![license][license-badge]][LICENSE]
 
@@ -12,7 +12,9 @@
 
 ## Documentation
 
-View full [documentation](docs/README.md).
+View [documentation](docs/README.md).
+
+If you want to contribute to this project, please read the [contribution guidelines](CONTRIBUTING.md).
 
 ## Installation
 
@@ -26,7 +28,7 @@ composer require studio24/deployer-recipes:^2.0 --dev
 
 See [installation instructions](docs/installation.md).
 
-### Deployer 6 (PHP 7.2 to 7.4)
+### Deployer 6 (PHP 7.2–7.4)
 
 Install via Composer:
 

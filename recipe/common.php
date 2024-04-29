@@ -7,19 +7,27 @@ require_once __DIR__ . '/../tasks/sync.php';
 require_once __DIR__ . '/../tasks/build-summary.php';
 require_once __DIR__ . '/../tasks/show-summary.php';
 require_once __DIR__ . '/../tasks/check-branch.php';
+require_once __DIR__ . '/../tasks/check-disk-space.php';
 require_once __DIR__ . '/../tasks/confirm-continue.php';
-require_once __DIR__ . '/../tasks/display-disk-space.php';
 require_once __DIR__ . '/../tasks/vendors-subpath.php';
+require_once __DIR__ . '/../tasks/ssh-check.php';
+
+// Default deployment and HTTP users
+set('remote_user', 'deploy');
+set('http_user', 'apache');
+
+// Default web root
+set('webroot', 'web');
 
 // Run pre-deployment checks
-task('pre-deploy-checks', [
-    'check-branch',
+desc('Run pre-deployment checks');
+task('deploy:pre-deploy-checks', [
+    'check:branch',
     'show-summary',
-    'display-disk-space',
+    'check:disk-space',
     'confirm-continue',
 ]);
-
-before('deploy', 'pre-deploy-checks');
+before('deploy', 'deploy:pre-deploy-checks');
 
 // Update build summary after deployment
 before('deploy:publish', 'build-summary');

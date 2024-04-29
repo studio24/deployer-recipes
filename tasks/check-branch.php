@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 option('force', null, InputOption::VALUE_NONE, 'Forces deployment of a not main branch to production.');
 
 desc('Check the branch to ensure only main/master is deployed to production');
-task('check-branch', function () {
+task('check:branch', function () {
     $alias = get('alias');
     $target = get('target');
     $defaultBranch = runLocally("git remote show {{repository}} | grep 'HEAD branch' | cut -d' ' -f5");

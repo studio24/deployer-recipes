@@ -10,11 +10,22 @@ users who load all Studio 24 Deployer tasks.
 
 ## Code must be standalone
 
-From v7 Deployer is distributed in a Phar file, which means you cannot use additional Composer packages in your recipes. 
+From v7 Deployer is distributed in a Phar file. 
+We recommend you do not use additional Composer packages in your code that do not already exist in Deployer, 
+to avoid the risk of clashing with the Deployer vendor packages. 
 
-## Pull Requests
+## Coding standards
 
 All contributions must be made on a branch and must pass coding standards.
+
+To check these locally run:
+
+```
+./vendor/bin/phplint
+./vendor/bin/phpcs
+```
+
+## Pull Requests
 
 Please create a Pull Request to merge changes into master, these will be automatically tested by
 [GitHub Actions](https://github.com/studio24/deployer-recipes/actions/workflows/php.yml).

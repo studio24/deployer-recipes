@@ -4,9 +4,13 @@ namespace Deployer;
 
 require_once 'contrib/slack.php';
 
-/**
- * Common setup for Slack notifications
- */
+// Extend the Slack recipe with our common setup
+
+// Slack webhook
+if (getenv('SLACK_WEBHOOK') === false) {
+    throw new \Exception('Please set the SLACK_WEBHOOK environment variable');
+}
+set('slack_webhook', getenv('SLACK_WEBHOOK'));
 
 // Slack notification configuration
 set('slack_text', '_{{user}}_ deploying `{{target}}` to *{{alias}}*');
