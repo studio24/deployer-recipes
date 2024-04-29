@@ -37,3 +37,8 @@ after('deploy:failed', 'deploy:unlock');
 
 // Do not track - telemetry
 putenv('DO_NOT_TRACK=1');
+
+// @todo Backwards compatible, remove once merged into main branch
+task('display-disk-space', ['check:disk-space']);
+task('check-branch', ['check:branch']);
+task('pre-deploy-checks', ['deploy:pre-deploy-checks']);
