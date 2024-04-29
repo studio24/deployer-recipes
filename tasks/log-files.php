@@ -24,5 +24,4 @@ task('log-files', function () {
     }
     cd('{{current_path}}');
     run(sprintf('tail -f %s', $logFiles));
-
 })->verbose();
