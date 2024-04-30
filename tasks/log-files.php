@@ -31,5 +31,4 @@ task('logs:search', function () {
         cd('{{current_path}}');
         run(sprintf('grep --color=always -i %s %s', $search, $logFile));
     }
-
 })->verbose();
