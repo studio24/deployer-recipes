@@ -6,7 +6,7 @@ use Deployer\Exception\HttpieException;
 use Deployer\Utility\Httpie;
 
 desc('Display the build_summary from the webserver');
-task('show-summary', function () {
+task('show', function () {
 
     // Get current build summary, skip this if it doesn't exist
     $buildUrl = get('url') . '/_build_summary.json';

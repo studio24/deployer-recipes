@@ -2,25 +2,25 @@
 
 How to perform different tasks with Deployer.
 
-* [Show what was last deployed](#show-what-was-last-deployed)
+* [Get information about deployments](#get-information-about-deployments)
 * [Deploying](#deploying)
 * [Rolling back](#rolling-back)
 * [Viewing logfiles](#viewing-logfiles)
 * [Synching files](#synching-files)
 * [SSH to a remote server](#ssh-to-a-remote-server)
 
-## Show what was last deployed
+## Get information about deployments
 
 To view what was last deployed to an environment:
 
 ```
-dep show-summary <environment>
+dep show <environment>
 ```
 
-E.g. 
+To view a list of releases:
 
 ```
-dep show-summary staging
+dep releases <environment>
 ```
 
 ## Deploying

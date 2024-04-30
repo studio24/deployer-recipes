@@ -143,6 +143,16 @@ set('sync', [
 
 See [sync documentation](tasks/sync.md).
 
+### Check disk space
+
+Deployment checks disk space and warns on low capacity. This checks on the `data` filesystem volume and warns when over 80% diskspace is used. 
+You can change this with `disk_space_filesystem` and `disk_space_threshold` respectively.
+
+```
+set('disk_space_filesystem', '/my-data');
+set('disk_space_threshold', 90);
+```
+
 ## 3. Hosts
 
 The host settings to enable Deployer to publish files over SSH. You will need to edit these.

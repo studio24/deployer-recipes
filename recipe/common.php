@@ -11,6 +11,7 @@ require_once __DIR__ . '/../tasks/check-disk-space.php';
 require_once __DIR__ . '/../tasks/confirm-continue.php';
 require_once __DIR__ . '/../tasks/vendors-subpath.php';
 require_once __DIR__ . '/../tasks/ssh-check.php';
+require_once __DIR__ . '/../tasks/log-files.php';
 
 // Default deployment and HTTP users
 set('remote_user', 'deploy');
@@ -23,10 +24,10 @@ set('webroot', 'web');
 desc('Run pre-deployment checks');
 task('deploy:pre-deploy-checks', [
     'check:branch',
-    'show-summary',
+    'show',
     'check:disk-space',
     'confirm-continue',
-]);
+])->hidden();
 before('deploy', 'deploy:pre-deploy-checks');
 
 // Update build summary after deployment
@@ -39,6 +40,7 @@ after('deploy:failed', 'deploy:unlock');
 putenv('DO_NOT_TRACK=1');
 
 // @todo Backwards compatible, remove once merged into main branch
-task('display-disk-space', ['check:disk-space']);
-task('check-branch', ['check:branch']);
-task('pre-deploy-checks', ['deploy:pre-deploy-checks']);
+task('display-disk-space', ['check:disk-space'])->hidden();
+task('check-branch', ['check:branch'])->hidden();
+task('pre-deploy-checks', ['deploy:pre-deploy-checks'])->hidden();
+task('show-summary', ['show-summary'])->hidden();

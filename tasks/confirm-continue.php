@@ -7,4 +7,4 @@ task('confirm-continue', function () {
     if (!askConfirmation('Continue with deployment?')) {
         throw error('Deployment aborted');
     }
-});
+})->hidden();

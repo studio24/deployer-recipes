@@ -37,4 +37,4 @@ task('check:branch', function () {
     }
 
     info("The $target branch is OK to deploy to $alias");
-});
+})->hidden();
