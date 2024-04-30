@@ -145,11 +145,21 @@ See [sync documentation](tasks/sync.md).
 
 ### Check disk space
 
-Deployment checks disk space and warns on low capacity. This checks on the `data` filesystem volume and warns when over 80% diskspace is used. 
-You can change this with `disk_space_filesystem` and `disk_space_threshold` respectively.
+The deployment process checks disk space and warns on low capacity.
+
+To enable the warning check you need to set `disk_space_filesystem`:
 
 ```
-set('disk_space_filesystem', '/my-data');
+# AWS
+set('disk_space_filesystem', '/data');
+
+# Mythic Beasts
+set('disk_space_filesystem', '/');
+```
+
+The check warns when over 80% disk space is used. You can change this with `disk_space_threshold`:
+
+```
 set('disk_space_threshold', 90);
 ```
 
