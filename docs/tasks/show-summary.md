@@ -15,19 +15,19 @@ No configuration is required.
 
 ## Tasks
 
-- `show-summary` – retrieves current deployment info and displays in the terminal
+- `show` – retrieves current deployment info and displays in the terminal
 
 ## Usage
   
 Run on any environment to display current deploy information   
 
 ```
-dep show-summary <environment>
+dep show <environment>
 ```  
 
 eg:
 ```
-dep show-summary production
+dep show production
 ```  
 
 This returns a response detailing what is deployed to production.

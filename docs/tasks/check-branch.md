@@ -15,7 +15,7 @@ No configuration required
 
 ## Tasks
 
-- `check-branch` – checks which stage and branch you are trying to deploy to. Ensures that non main branches deployed to production have to be forced.
+- `check:branch` – checks which stage and branch you are trying to deploy to. Ensures that non main branches deployed to production have to be forced.
 
 ## Usage
 

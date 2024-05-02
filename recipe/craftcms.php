@@ -43,7 +43,7 @@ task('craft:restore-db', function () {
 desc('Craft storage: reset storage permissions');
 task('craft:storage', function () {
     writeln('Updating storage directory permissions');
-    run('deploy:writable');
+    invoke('deploy:writable');
 });
 
 desc('Runs pending Craft CMS migrations and applies pending project config changes');

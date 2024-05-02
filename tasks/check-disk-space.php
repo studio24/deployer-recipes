@@ -13,7 +13,7 @@ use Deployer\Task\Context;
 
 desc('Display server disk usage prior to deployment');
 task('check:disk-space', function () {
-    $filesystem = get('', '');
+    $filesystem = get('disk_space_filesystem', '');
     $threshold = (int) get('disk_space_threshold', 80);
 
     if (!empty($filesystem)) {
