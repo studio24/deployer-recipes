@@ -33,9 +33,9 @@ This package contains [Deployer](https://deployer.org/) recipes used to help dep
 ## Utility tasks
 
 * [check-ssh](tasks/check-ssh.md) - check SSH connection to remote server
-* [logs:list]
-* [logs:view]
-* [logs:search]
-* [logs:download]
+* [logs:list](tasks/logs.md) - list available log files
+* [logs:view](tasks/logs.md) - view a log file
+* [logs:search](tasks/logs.md) - search a log file
+* [logs:download](tasks/download.md) - download a log file
 * [show](tasks/show-summary.md) - display a summary of the current deployment info 
 * [sync](tasks/sync.md) - sync files or folders from the remote host to local development

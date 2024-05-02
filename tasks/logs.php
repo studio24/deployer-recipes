@@ -8,7 +8,10 @@ option('logfile', null, InputOption::VALUE_OPTIONAL, 'Log file to display');
 option('lines', null, InputOption::VALUE_OPTIONAL, 'How many lines of the logfile to display (use 0 to view all)');
 option('search', null, InputOption::VALUE_OPTIONAL, 'Only return lines that match the search string');
 
-normaliseLogFilesSetting();
+// Backward compatibility
+before('logs:app', function(){
+    normaliseLogFilesSetting();
+});
 
 desc('List available log files');
 task('logs:list', function () {
