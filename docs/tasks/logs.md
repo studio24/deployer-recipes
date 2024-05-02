@@ -64,6 +64,13 @@ Example:
 dep logs:view production
 ```
 
+When you view a log file, if you don't specify a logfile as an option you'll be asked to choose from available log files.
+
+You can either keep the logfile open for new entries and view the last entries. This uses `tail -f` to open the logfile for viewing. 
+New entries will appear until you cancel the command with `Ctrl+C`.
+
+Or you can specify the number of lines to view in the logfile. If you pass `0` then this displays all logfile lines.
+
 ### logs:search
 
 Return matching lines from a log file, options include:
