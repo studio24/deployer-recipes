@@ -1,4 +1,4 @@
-# Check branch recipe
+# Check disk space
 
 Displays the disk usage of the remote server in the terminal
 ## Usage
@@ -27,6 +27,10 @@ set('disk_space_filesystem', '/');
 ## Usage
 
 This automatically runs in the pre deploy tasks.
+
+```
+dep check:disk-space <environment>
+```
 
 Returns a summary of disk usage to the terminal (excluding temp drives) as below:
 

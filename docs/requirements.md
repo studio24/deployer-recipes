@@ -16,5 +16,5 @@ to client servers.
 You can check SSH access works via:
 
 ```
-dep check-ssh
+dep check:ssh
 ```
