@@ -2,9 +2,10 @@
 namespace Deployer;
 
 /**
- * 1. Deployer recipe we are using for this website
+ * 1. Deployer recipes we are using for this website
  */
 require_once 'vendor/studio24/deployer-recipes/recipe/wordpress.php';
+require 'contrib/php-fpm.php';
 
 /**
  * 2. Deployment configuration variables
@@ -27,20 +28,20 @@ set('disk_space_filesystem', '/');
 host('production')
     ->set('hostname', '1.2.3.4')
     ->set('http_user', 'production')
-    ->set('deploy_path', '/data/var/www/vhosts/DOMAIN.co.uk/production')
+    ->set('deploy_path', '/var/www/vhosts/DOMAIN.co.uk/production')
     ->set('log_files', [
-        '/data/logs/DOMAIN.co.uk.access.log',
-        '/data/logs/DOMAIN.co.uk.error.log',
+        '/var/log/apache2/DOMAIN.co.uk.access.log',
+        '/var/log/apache2/DOMAIN.co.uk.error.log',
     ])
     ->set('url', 'https://www.DOMAIN.co.uk');
 
 host('staging')
     ->set('hostname', '1.2.3.4')
     ->set('http_user', 'staging')
-    ->set('deploy_path', '/data/var/www/vhosts/DOMAIN.co.uk/staging')
+    ->set('deploy_path', '/var/www/vhosts/DOMAIN.co.uk/staging')
     ->set('log_files', [
-        '/data/logs/staging.DOMAIN.co.uk.access.log',
-        '/data/logs/staging.DOMAIN.co.uk.error.log',
+        '/var/log/apache2/staging.DOMAIN.co.uk.access.log',
+        '/var/log/apache2/staging.DOMAIN.co.uk.error.log',
     ])
     ->set('url', 'https://DOMAIN.studio24.dev');
 

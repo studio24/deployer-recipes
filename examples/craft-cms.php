@@ -2,7 +2,7 @@
 namespace Deployer;
 
 /**
- * 1. Deployer recipe we are using for this website
+ * 1. Deployer recipes we are using for this website
  */
 require_once 'vendor/studio24/deployer-recipes/recipe/craftcms.php';
 require 'contrib/php-fpm.php';

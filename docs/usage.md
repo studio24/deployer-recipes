@@ -23,6 +23,12 @@ To view a list of releases:
 dep releases <environment>
 ```
 
+To find out what tasks will run for a deployment add the `--plan` option:
+
+```
+dep deploy --plan staging
+```
+
 ## Deploying
 
 To run a deployment:
@@ -77,17 +83,13 @@ dep rollback production
 
 Deployer defines application logfiles in the `log_files` configuration setting. This can be one or multiple log files.
 
-View the last 10 lines of log files via:
+View a log file via:
 
 ```
-dep logs:app <environment>
+dep logs:view
 ```
 
-E.g.
-
-```
-dep logs:app staging
-```
+See [logs](tasks/logs.md) for more information. 
 
 ## Synching files
 

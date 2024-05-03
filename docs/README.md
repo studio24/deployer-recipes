@@ -14,20 +14,15 @@ This package contains [Deployer](https://deployer.org/) recipes used to help dep
 
 ## Recipes
 
-* Default
-* Craft CMS
-* Laravel
-* Symfony
-* WordPress
+* [Slack](recipes/slack.md) - send a notification to Slack when a deployment is complete
 
 ## Deployment tasks
 
 * [build-summary](tasks/build-summary.md) - create a `_build_summary.json` file to record deployment info
 * [check:branch](tasks/check-branch.md) - ensure only default branch (main/master) is deployed to production
-* [confirm-continue](tasks/confirm-continue.md) - ask confirmation from user before continuing with deployment
 * [check:disk-space](tasks/display-disk-space.md) - display server disk usage prior to deployment
+* [confirm-continue](tasks/confirm-continue.md) - ask confirmation from user before continuing with deployment
 * [show](tasks/show-summary.md) - display a summary of the current deployment info
-* [sync](tasks/sync.md) - sync files or folders from the remote host to local development
 * [vendors-subpath](tasks/vendors-subpath.md) - Run composer install in a sub-path
 
 ## Utility tasks

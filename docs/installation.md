@@ -6,127 +6,149 @@ Install via Composer in your project:
 
 ```
 composer require studio24/deployer-recipes:^2.0 --dev
-```  
+```
 
-## Deployer recipes
+## How we use Deployer recipes
 
-We create custom recipes for Studio 24 usage, making use of standard Deployer recipes where these work for us. Take a look
-at the recipe source code to see what it does and what defaults it sets. You can override the defaults in your deploy.php file if you need to.
+Recipes are a set of tasks and settings to help us deploy a website. 
+We create custom recipes for Studio 24 usage, some of which are based on standard Deployer recipes.
+
+Your `deploy.php` file will load one or more recipes to help with deployment tasks.
+If you need to see what a recipe does, you can view the source code. 
 
 If an example deploy file doesn't exist for your platform you can add one to the [deployer-recipes](https://github.com/studio24/deployer-recipes) repo.
 
 ## Create a deploy.php file
 
-The `deploy.php` file is used to store configuration for deployment. You can copy an example file to your project to help start you off.
-
-### Default: 
-
-```
-cp vendor/studio24/deployer-recipes/examples/default.php ./deploy.php
-```
-
-[Source](../recipe/default.php).
+The `deploy.php` file is used to store configuration for deployment. To get started copy an example file to your project to help start you off.
+You only need to copy one of these.
 
 ### Craft CMS:
+
+For deploying Craft CMS websites.
 
 ```
 cp vendor/studio24/deployer-recipes/examples/craft-cms.php ./deploy.php
 ```
 
-[Source](../recipe/craft-cms.php).
-
-### Laravel:
-
-```
-cp vendor/studio24/deployer-recipes/examples/laravel.php ./deploy.php
-```
-
-[Source](../recipe/laravel.php).
-
-### Symfony:
-
-```
-cp vendor/studio24/deployer-recipes/examples/symfony.php ./deploy.php
-```
-
-[Source](../recipe/symfony.php).
+[Source](../recipe/craft-cms.php)
 
 ### WordPress
+
+For deploying WordPress websites. 
 
 ```
 cp vendor/studio24/deployer-recipes/examples/wordpress.php ./deploy.php
 ```
 
-[Source](../recipe/wordpress.php).
+[Source](../recipe/wordpress.php)
 
-## Edit the deploy.php file
+### Laravel:
 
-The example deploy file contains setup and defaults for the platform you are using, you will need to review this and update it for your specific project. 
+For deploying Laravel web apps.
 
-**Note:** please make sure you remove any config that is not used for your project.
+```
+cp vendor/studio24/deployer-recipes/examples/laravel.php ./deploy.php
+```
 
-The different sections of the deploy file are explained below.
+[Source](../recipe/laravel.php)
 
-## 1. Deployer recipe
+### Symfony:
 
-The Deployer recipe the deploy script is based on.
+For deploying Symfony web apps.
 
+```
+cp vendor/studio24/deployer-recipes/examples/symfony.php ./deploy.php
+```
+
+[Source](../recipe/symfony.php)
+
+### Default:
+
+If none of the above work, try this!
+
+```
+cp vendor/studio24/deployer-recipes/examples/default.php ./deploy.php
+```
+
+[Source](../recipe/default.php)
+
+## Overriding recipe defaults
+
+Many recipes contain predefined settings for `shared_files`, `shared_dirs`, `writable_dirs`, `remote_user`, `http_user`, and `webroot`.
+
+You can view these settings in the source code for the recipe.
+
+To add a setting to your `deploy.php` file, you can use the [add()](https://deployer.org/docs/7.x/api#add) function. This will add to the predefined settings.
+
+To completely replace the settings in your `deploy.php` file, you can use the [set()](https://deployer.org/docs/7.x/api#set) function. This will replace the predefined settings.
+
+## Remove config you don't use
+
+Please make sure you remove any config that is not used for your project.
+
+For example, the example deploy scripts contain an PHP-FPM reload command and we set the `http_user` for each host if we are using PHP-FPM. If you don't use this remove this.
+
+## Deployer recipes
+
+Your `deploy.php` file will load one or more recipes to help with deployment tasks.
 You can add other recipes for specific tasks.
+
+### PHP-FPM
+
+Reload [PHP-FPM](https://deployer.org/docs/7.x/contrib/php-fpm) after a deployment.
+
+#### Recipe
+
+```
+require 'contrib/php-fpm.php';
+```
+
+#### Deployment task 
+
+```
+// PHP-FPM reload
+after('deploy', 'php-fpm:reload');
+```
 
 ### Slack
 
-Add the Slack recipe to send notifications to a Slack channel on deployment.
+Add the [Slack recipe](recipes/slack.md) to send notifications to a Slack channel on deployment. 
 
-```
-require 'vendor/studio24/deployer-recipes/recipe/slack.php';
-```
+## Deployment configuration variables
 
-You need to set up a [Slack webhook URL](https://api.slack.com/messaging/webhooks) and save this in your `.env` file:
+Configuration variables are set up using the `set()` function. You can add values to an array with the `add()` function. 
 
-```
-SLACK_WEBHOOK=https://hooks.slack.com/services/your/webhook/url
-```
+## Settings you need to edit
 
-In your deploy.php
-
-```
-set('dotenv', '{{current_path}}/.env');
-```
-
-## 2. Deployment configuration variables
-
-Configuration variables are set up using the `set()` function. You'll need to edit these.
+You'll need to edit these settings:
 
 * `application` - your application name
 * `repository` - GitHub repo URL, please ensure this uses the SSH URL, e.g. git@github.com:studio24/project-name.git
-* `http_user` - HTTP user that the webserver runs as (when we use PHP-FPM this is normally `production` or `staging`), remove this if you're not using PHP-FPM
-* `log_files` - Path to log files, you can add multiple files as an array (or a string separated by spaces)
+* `disk_space_filesystem` - the filesystem volume to [check disk space](#disk_space_filesystem) when deploying
 
 Settings that you shouldn't need to change:
 
 * `remote_user` - remote user to login via SSH to deploy files
 * `webroot` - document root for the website, usually web or public
 
-#### .env file
+### disk_space_filesystem
 
-You can use a `.env` file to store sensitive information. This is loaded in the deploy.php file via:
-
-```
-set('dotenv', '{{current_path}}/.env');
-```
-
-You can then use environment variables in your deploy.php file. 
-
-For example, if you have the environment variable `API_KEY` in your `.env` file:
+The deployment process checks disk space and warns on low capacity.
+To enable the warning check you need to set `disk_space_filesystem`:
 
 ```
-API_KEY=abc123
+# AWS
+set('disk_space_filesystem', '/data');
+
+# Mythic Beasts
+set('disk_space_filesystem', '/');
 ```
 
-You can reference this in your deploy.php file like so:
+The check warns when over 80% disk space is used. You can change this with `disk_space_threshold`:
 
 ```
-getenv('API_KEY');
+set('disk_space_threshold', 90);
 ```
 
 ### shared_files
@@ -165,37 +187,29 @@ set('sync', [
 
 See [sync documentation](tasks/sync.md).
 
-### PHP-FPM
+#### .env file
 
-To reload PHP-FPM after deployment, use:
-
-```
-after('deploy', 'php-fpm:reload');
-```
-
-See [PHP-FPM docs](https://deployer.org/docs/7.x/contrib/php-fpm). We set the `php_fpm_command` in [common.php](../recipe/common.php).
-
-### Check disk space
-
-The deployment process checks disk space and warns on low capacity.
-
-To enable the warning check you need to set `disk_space_filesystem`:
+You can use a `.env` file to store sensitive information. This is loaded in the deploy.php file via:
 
 ```
-# AWS
-set('disk_space_filesystem', '/data');
-
-# Mythic Beasts
-set('disk_space_filesystem', '/');
+set('dotenv', '{{current_path}}/.env');
 ```
 
-The check warns when over 80% disk space is used. You can change this with `disk_space_threshold`:
+You can then use environment variables in your deploy.php file.
+
+For example, if you have the environment variable `API_KEY` in your `.env` file:
 
 ```
-set('disk_space_threshold', 90);
+API_KEY=abc123
 ```
 
-## 3. Hosts
+You can reference this in your deploy.php file like so:
+
+```
+getenv('API_KEY');
+```
+
+## Hosts
 
 The host settings to enable Deployer to publish files over SSH. You will need to edit these.
 
@@ -204,7 +218,12 @@ The format of the host settings is:
 ```php
 host('[environment name]')
     ->set('hostname', '[ip address]')
-    ->set('deploy_path', '/path/to/[environment]')
+    ->set('http_user', '[php_fpm_user]')
+    ->set('deploy_path', '/path/to/project_root')
+    ->set('log_files', [
+        '/var/log/apache2/DOMAIN.co.uk.access.log',
+        '/var/log/apache2/DOMAIN.co.uk.error.log',
+    ])
     ->set('url', '[website url]');
 ```
 
@@ -212,8 +231,14 @@ An example:
 
 ```php
 host('production')
-    ->set('hostname', '63.34.69.8')
-    ->set('deploy_path', '/data/var/www/vhosts/studio24.net/production')
+    ->set('hostname', '1.2.3.4')
+    ->set('http_user', 'production')
+    ->set('deploy_path', '/var/www/vhosts/studio24.net/production')
+    ->set('log_files', [
+        'storage/logs/*.log',
+        '/var/log/apache2/studio24.net.access.log',
+        '/var/log/apache2/studio24.net.error.log',
+    ])
     ->set('url', 'https://www.studio24.net');
 ```
 
@@ -221,15 +246,18 @@ The key information you need to set is:
 
 * `host('[environment name]')` - Environment name
 * `hostname` - Hostname or IP address to deploy to
+* `http_user` - The PHP-FPM user (not required if you are not using PHP-FPM)
 * `deploy_path` - Path to deploy files to
-* `log_files` - Path to log files (optional)
+* `log_files` - Array of log files (optional)
 * `url` - The URL of the website
 
-You can set log_files to one file, multiple files, or use * to pattern match valid log files (e.g. storage/logs/*.log).
+You can set log_files to one file, multiple files, or use * to pattern match valid log files (e.g. `storage/logs/*.log`).
 
 See [hosts documentation](https://deployer.org/docs/7.x/hosts).
 
-## 4. Deployment tasks
+## Deployment tasks
+
+You can add any custom deployment tasks here. Hopefully the common tasks required to deploy your project will be taken care of by the recipe you are using.
 
 ### Running a custom task
 We recommend leaving the default tasks as defined in the Deployer recipe and using the [before()](https://deployer.org/docs/7.x/api#before) 
@@ -244,14 +272,8 @@ task('my-custom-task', function () {
 after('deploy:success', 'my-custom-task');
 ```
 
-You can see the different deployment steps in the recipe documentation. 
-
-You can refer to the Deployer recipe source code to review when to run a custom task. Some key tasks:
-
-* deploy:prepare - deployment is prepared, code is published to a release folder, everything is done prior to actually making this release live
-* deploy:publish - updates the current deployment to point to the new release (at which point it is live)
-* deploy:success - deployment is successful
-* deploy:failed - deployment has failed
+You can see the different deployment steps by passing the `--plan` option to your deploy command. 
+Also see Deplopyer [common tasks](https://deployer.org/docs/7.x/recipe/common#tasks).
 
 ### Running multiple tasks
 

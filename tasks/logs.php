@@ -2,6 +2,7 @@
 
 namespace Deployer;
 
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 
 option('logfile', null, InputOption::VALUE_OPTIONAL, 'Log file to display');
@@ -190,6 +191,20 @@ function expandLogFiles(array $logfiles): array
             $path = dirname($file);
             $file = basename($file);
             cd('{{current_path}}');
+
+            // Test folder exists
+            if (!test(sprintf('[ -d %s ]', $path))) {
+                writeln('<error>Logs directory does not exist: ' . $path . '</error>');
+                continue;
+            }
+
+            // Test files exist in folder
+            $numFiles = run(sprintf('ls -A %s | wc -l', $path));
+            if ($numFiles < 1) {
+                continue;
+            }
+
+            // Expand logfiles from wildcard
             cd($path);
             $output = run(sprintf('ls %s', $file));
             $files = explode("\n", $output);
