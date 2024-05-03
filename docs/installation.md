@@ -1,5 +1,15 @@
 # Installation
 
+* [Composer](#composer)
+* [How we use Deployer recipes](#how-we-use-deployer-recipes)
+* [Create a deploy.php file](#create-a-deployphp-file)
+* [Overriding recipe defaults](#overriding-recipe-defaults)
+* [Remove config you don't use](#remove-config-you-dont-use)
+* [Deployer recipes](#deployer-recipes)
+* [Configuration](#configuration)
+* [Hosts](#hosts)
+* [Deployment tasks](#deployment-tasks)
+
 ## Composer
 
 Install via Composer in your project:
@@ -115,11 +125,9 @@ after('deploy', 'php-fpm:reload');
 
 Add the [Slack recipe](recipes/slack.md) to send notifications to a Slack channel on deployment. 
 
-## Deployment configuration variables
+## Configuration
 
 Configuration variables are set up using the `set()` function. You can add values to an array with the `add()` function. 
-
-## Settings you need to edit
 
 You'll need to edit these settings:
 
