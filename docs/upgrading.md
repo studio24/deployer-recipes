@@ -20,22 +20,14 @@ It's recommended you rename your existing deployment file for reference:
 cp deploy.php deploy.v1.php
 ```
 
-You can then copy an example deployment file (see [installation](installation.md)). 
-You can copy your existing setup into this new file.
+You can then copy an example deployment file (see [installation](installation.md#create-a-deployphp-file)) and copy your existing setup into here.
+
+General tips appear below.
 
 ### Recipe
 
-Replace: 
+You should only need to require once recipe file.   
 
-```php
-require 'vendor/studio24/deployer-recipes/all.php';
-```
-
-with:
-
-```php
-require 'vendor/studio24/deployer-recipes/recipe/common.php';
-```
 
 ### Configuration
 

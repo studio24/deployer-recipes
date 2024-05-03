@@ -69,7 +69,29 @@ The different sections of the deploy file are explained below.
 
 ## 1. Deployer recipe
 
-The Deployer recipe the deploy script is based on. 
+The Deployer recipe the deploy script is based on.
+
+You can add other recipes for specific tasks.
+
+### Slack
+
+Add the Slack recipe to send notifications to a Slack channel on deployment.
+
+```
+require 'vendor/studio24/deployer-recipes/recipe/slack.php';
+```
+
+You need to set up a [Slack webhook URL](https://api.slack.com/messaging/webhooks) and save this in your `.env` file:
+
+```
+SLACK_WEBHOOK=https://hooks.slack.com/services/your/webhook/url
+```
+
+In your deploy.php
+
+```
+set('dotenv', '{{current_path}}/.env');
+```
 
 ## 2. Deployment configuration variables
 
@@ -78,7 +100,7 @@ Configuration variables are set up using the `set()` function. You'll need to ed
 * `application` - your application name
 * `repository` - GitHub repo URL, please ensure this uses the SSH URL, e.g. git@github.com:studio24/project-name.git
 * `http_user` - HTTP user that the webserver runs as (when we use PHP-FPM this is normally `production` or `staging`), remove this if you're not using PHP-FPM
-* `log_files` - Path to log files, separate multiple files with a comma
+* `log_files` - Path to log files, you can add multiple files as an array (or a string separated by spaces)
 
 Settings that you shouldn't need to change:
 
@@ -142,6 +164,16 @@ set('sync', [
 ```
 
 See [sync documentation](tasks/sync.md).
+
+### PHP-FPM
+
+To reload PHP-FPM after deployment, use:
+
+```
+after('deploy', 'php-fpm:reload');
+```
+
+See [PHP-FPM docs](https://deployer.org/docs/7.x/contrib/php-fpm). We set the `php_fpm_command` in [common.php](../recipe/common.php).
 
 ### Check disk space
 

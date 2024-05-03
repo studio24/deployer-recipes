@@ -2,8 +2,8 @@
 
 namespace Deployer;
 
-desc('Checks you can connect to the host via SSH');
-task('ssh:check', function () {
+desc('Check you can connect to the host via SSH');
+task('check:ssh', function () {
 
     // Get timeout value, defaults to 10 seconds to give feedback quickly
     $timeout = get('check-ssh-timeout', 10);

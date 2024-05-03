@@ -11,9 +11,9 @@ require_once __DIR__ . '/../tasks/build-summary.php';
 require_once __DIR__ . '/../tasks/show-summary.php';
 require_once __DIR__ . '/../tasks/check-branch.php';
 require_once __DIR__ . '/../tasks/check-disk-space.php';
+require_once __DIR__ . '/../tasks/check-ssh.php';
 require_once __DIR__ . '/../tasks/confirm-continue.php';
 require_once __DIR__ . '/../tasks/vendors-subpath.php';
-require_once __DIR__ . '/../tasks/ssh-check.php';
 require_once __DIR__ . '/../tasks/logs.php';
 
 // Default deployment and HTTP users
@@ -22,6 +22,9 @@ set('http_user', 'apache');
 
 // Default web root
 set('webroot', 'web');
+
+// Command to reload PHP-FPM
+set('php_fpm_command', 'sudo -n service {{php_fpm_service}} reload');
 
 // Run pre-deployment checks
 desc('Run pre-deployment checks');

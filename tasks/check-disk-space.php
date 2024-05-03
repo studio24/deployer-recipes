@@ -11,7 +11,7 @@ namespace Deployer;
 
 use Deployer\Task\Context;
 
-desc('Display server disk usage prior to deployment');
+desc('Check remote server disk usage');
 task('check:disk-space', function () {
     $filesystem = get('disk_space_filesystem', '');
     $threshold = (int) get('disk_space_threshold', 80);

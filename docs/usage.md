@@ -122,3 +122,9 @@ E.g. to connect to staging:
 ``` 
 dep ssh staging
 ```
+
+You can check if your SSH connection is working via:
+
+```
+dep check:ssh <environment>
+```
