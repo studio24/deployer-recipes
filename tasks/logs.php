@@ -10,7 +10,7 @@ option('lines', null, InputOption::VALUE_OPTIONAL, 'How many lines of the logfil
 option('search', null, InputOption::VALUE_OPTIONAL, 'Only return lines that match the search string');
 
 // Backward compatibility
-before('logs:app', function(){
+before('logs:app', function () {
     normaliseLogFilesSetting();
 });
 
@@ -141,7 +141,6 @@ task('logs:download', function () {
     // Build example command
     $command = sprintf('dep logs:download %s --logfile=%s', currentHost(), $logfile);
     writeln(sprintf('<info>Run again with: %s</info>', $command));
-
 });
 
 /**
