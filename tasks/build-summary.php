@@ -3,18 +3,24 @@
 namespace Deployer;
 
 desc('Creates a _build_summary.json file in the webserver doc root');
-task('s24:build-summary', function () {
-    cd('{{release_path}}/' . get('webroot'));
+task('build-summary', function () {
+
+    $webroot = get('webroot');
+    if (empty($webroot)) {
+        throw error('Deployer config setting webroot is not set, you must set this via set("webroot", "value") in deploy.php');
+    }
+
+    cd('{{release_path}}/' . $webroot);
     $build_data = [
-        'environment' => get('stage'),
+        'environment' => get('alias'),
         'deploy_datetime' => date('c'),
         'git_branch' => get('branch'),
-        'git_commit' => run('git rev-parse HEAD'),
-        'deployed_by' => runLocally('git config user.name'),
+        'git_commit' => get('release_revision'),
+        'deployed_by' => get('user'),
     ];
 
     run("echo '" . json_encode($build_data, JSON_PRETTY_PRINT) . "' > _build_summary.json");
 
     $url = rtrim(get('url'), '/') . '/';
-    writeln('Build summary saved to: ' . $url . '_build_summary.json');
+    info('Build summary saved to: <options=bold>' . $url . '_build_summary.json</>');
 });

@@ -11,13 +11,14 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['7.3', '7.4']
+        php-versions: ['8.0', '8.1', '8.2', '8.3']
 
     runs-on: ubuntu-latest
 
     steps:
+      # https://github.com/marketplace/actions/checkout
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       # https://github.com/marketplace/actions/setup-php-action
       - name: Setup PHP
@@ -27,8 +28,6 @@ jobs:
           extensions: mbstring, intl
           ini-values: post_max_size=256M, max_execution_time=180
           tools: composer
-
-      - uses: actions/checkout@v2
 
       - name: Check PHP version
         run: php -v
@@ -42,5 +41,3 @@ jobs:
       - name: Coding standards
         run: ./vendor/bin/phpcs
 
-      - name: PHPUnit
-        run: ./vendor/bin/phpunit

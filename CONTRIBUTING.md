@@ -5,23 +5,27 @@ must accept these license and copyright conditions.
 
 ## Organising code
 
-New tasks must be added to the `tasks/` folder and required in the [`all.php`](all.php) file to ensure it is available for 
+New tasks must be added to the `tasks/` folder and required in the [`recipe/common.php`](all.php) file to ensure it is available for 
 users who load all Studio 24 Deployer tasks.
 
-Where possible extract any testable code into a class in the `src/` folder with the `Studio24\Deployer` namespace. You 
-can then use these in your Deployer task via `use` statements. E.g.
+## Code must be standalone
 
-```
-use Studio24\Deployer\Check;
-```
+From v7 Deployer is distributed in a Phar file. 
+We recommend you do not use additional Composer packages in your code that do not already exist in Deployer, 
+to avoid the risk of clashing with the Deployer vendor packages. 
 
-You should then [write a unit test](https://phpunit.de/getting-started/phpunit-9.html) to help test functionality in the 
-`tests/` folder. In this manner the tasks become simple and rather like "thin controllers" with functionality 
-moved into classes in the `src/` folder
-
-## Pull Requests
+## Coding standards
 
 All contributions must be made on a branch and must pass coding standards.
+
+To check these locally run:
+
+```
+./vendor/bin/phplint
+./vendor/bin/phpcs
+```
+
+## Pull Requests
 
 Please create a Pull Request to merge changes into master, these will be automatically tested by
 [GitHub Actions](https://github.com/studio24/deployer-recipes/actions/workflows/php.yml).
@@ -45,26 +49,3 @@ To create a new release do the following:
    at GitHub. This will automatically create a new release at [Packagist](https://packagist.org/packages/studio24/deployer-recipes)
    so code can be loaded via Composer.
 
-## Tests
-
-Please add unit tests for all bug fixes and new code changes.
-
-Run PHPUnit tests via:
-
-```
-vendor/bin/phpunit
-```
-
-## Coding standards
-
-Strata follows the [PSR-12](https://www.php-fig.org/psr/psr-12/) coding standard. You can check this with:
-
-```
-vendor/bin/phpcs
-```
-
-Where possible you can auto-fix code via:
-
-```
-vendor/bin/phpcbf
-```
