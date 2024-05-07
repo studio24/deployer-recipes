@@ -191,6 +191,9 @@ function expandLogFiles(array $logfiles): array
             $file = basename($file);
             cd('{{current_path}}');
 
+            // Remove wildcard, so we can replace it with actual files
+            unset($logfiles[$key]);
+
             // Test folder exists
             if (!test(sprintf('[ -d %s ]', $path))) {
                 writeln('<error>Logs directory does not exist: ' . $path . '</error>');
@@ -207,7 +210,6 @@ function expandLogFiles(array $logfiles): array
             cd($path);
             $output = run(sprintf('ls %s', $file));
             $files = explode("\n", $output);
-            unset($logfiles[$key]);
             if (!empty($files)) {
                 array_walk($files, function (&$value) use ($path) {
                     $value = $path . DIRECTORY_SEPARATOR . $value;
