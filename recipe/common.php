@@ -23,9 +23,6 @@ set('http_user', 'apache');
 // Default web root
 set('webroot', 'web');
 
-// Command to reload PHP-FPM
-set('php_fpm_command', 'sudo -n service {{php_fpm_service}} reload');
-
 // Run pre-deployment checks
 desc('Run pre-deployment checks');
 task('deploy:pre-deploy-checks', [

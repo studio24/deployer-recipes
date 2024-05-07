@@ -123,6 +123,15 @@ require 'contrib/php-fpm.php';
 after('deploy', 'php-fpm:reload');
 ```
 
+#### Hosting requirements
+
+Please note the `deploy` user needs sudo permissions to run the PHP-FPM reload command.
+This needs to be setup via Ansible for the hosting platform.
+
+```
+deploy   ALL=(ALL) NOPASSWD:/usr/bin/systemctl reload php*-fpm
+```
+
 ### Slack
 
 Add the [Slack recipe](recipes/slack.md) to send notifications to a Slack channel on deployment. 
