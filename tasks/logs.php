@@ -203,6 +203,7 @@ function expandLogFiles(array $logfiles): array
             // Test files exist in folder
             $numFiles = run(sprintf('ls -A %s | wc -l', $path));
             if ($numFiles < 1) {
+                writeln('<info>No logfiles exist in: ' . $path . '</info>');
                 continue;
             }
 
