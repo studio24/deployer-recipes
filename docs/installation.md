@@ -6,6 +6,8 @@
 * [Overriding recipe defaults](#overriding-recipe-defaults)
 * [Remove config you don't use](#remove-config-you-dont-use)
 * [Deployer recipes](#deployer-recipes)
+    * [PHP-FPM](#php-fpm)
+    * [Slack](#slack)
 * [Configuration](#configuration)
 * [Hosts](#hosts)
 * [Deployment tasks](#deployment-tasks)
@@ -177,6 +179,20 @@ Examples include storage folder for logs, or image upload folders.
 The `writable_dirs` setting defines folders that the webserver needs to write to. 
 
 Examples include storage folder for logs, or image upload folders.
+
+If you want to make sure a folder exists add it to `writable_dirs`.  For example, you may set a `shared` folder to 
+be shared and writable and specify some sub-folders you want to exist.  E.g.
+
+```
+set('shared_dirs', [
+    'storage',
+]);
+set ('writeable_dirs', [
+    'storage',
+    'storage/backups',
+    'storage/logs',
+]);
+```
 
 ### sync
 
