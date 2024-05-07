@@ -21,6 +21,8 @@ set('shared_dirs', [
 set('writable_dirs', [
     'config/project',
     'storage',
+    'storage/backups',
+    'storage/logs',
     'web/assets',
     'web/cpresources',
 ]);
