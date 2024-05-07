@@ -1,6 +1,8 @@
 # Usage
 
-How to perform different tasks with Deployer.
+How to perform different tasks with Deployer. 
+
+You can run `dep list` to view available commands.
 
 * [Get information about deployments](#get-information-about-deployments)
 * [Deploying](#deploying)
