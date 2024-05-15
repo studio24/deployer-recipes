@@ -53,5 +53,3 @@ task('deploy', [
     'artisan:migrate',
     'deploy:publish',
 ]);
-
-after('deploy:failed', 'craft:restore-db');
