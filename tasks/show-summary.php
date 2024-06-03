@@ -71,7 +71,12 @@ task('show', function () {
     }
 
     // Output last build info
-    $date = new \DateTimeImmutable($buildData['deploy_datetime']);
+    try {
+        $date = new \DateTimeImmutable($buildData['deploy_datetime']);
+    } catch (\Exception $e) {
+        // Try old legacy format "20240415_094357"
+        $date = \DateTimeImmutable::createFromFormat('Ymd_His', $buildData['deploy_datetime']);
+    }
     $summary = sprintf(
         '<options=bold>Last build:</> <info>%s</> deployed <info>%s</> branch to <info>%s</> environment on <info>%s</>',
         $buildData['deployed_by'],
