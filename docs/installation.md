@@ -91,6 +91,8 @@ Many recipes contain predefined settings for `shared_files`, `shared_dirs`, `wri
 
 You can view these settings in the source code for the recipe.
 
+Please note we have some common settings in [recipe/common.php](../recipe/common.php) (e.g. http_user, remote_user). 
+
 To add a setting to your `deploy.php` file, you can use the [add()](https://deployer.org/docs/7.x/api#add) function. This will add to the predefined settings.
 
 To completely replace the settings in your `deploy.php` file, you can use the [set()](https://deployer.org/docs/7.x/api#set) function. This will replace the predefined settings.

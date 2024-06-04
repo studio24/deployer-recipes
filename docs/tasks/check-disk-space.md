@@ -10,6 +10,8 @@ require 'vendor/studio24/deployer-recipes/tasks/check-disk-space.php';
 ```
 
 ## Configuration
+
+### disk_space_filesystem
 If you set the filesystem mount this check can review disk capacity and warn if it is too low.
 
 ```
@@ -19,6 +21,14 @@ set('disk_space_filesystem', '/data');
 # Mythic Beasts
 set('disk_space_filesystem', '/');
 ```
+
+### disk_space_threshold
+
+Set the disk space available (%) threshold to issue a disk space warning, by default this is 80.
+
+### disk_space_max
+
+Set the disk space available (%) threshold to halt deployment due to not enough server space, by default this is 97.
 
 ## Tasks
 

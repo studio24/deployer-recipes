@@ -15,6 +15,7 @@ desc('Check remote server disk usage');
 task('check:disk-space', function () {
     $filesystem = get('disk_space_filesystem', '');
     $threshold = (int) get('disk_space_threshold', 80);
+    $max = (int) get('disk_space_max', 97);
 
     if (!empty($filesystem)) {
         // Run for a specific filesystem volume
@@ -27,8 +28,10 @@ task('check:disk-space', function () {
         // One filesystem volume returned
         if (count($m[1]) === 1) {
             $used = $m[1][0];
-            if ($used > $threshold) {
-                writeln(sprintf("<error>Server disk space is almost full: %d%% used</error>", $used));
+            if ($used >= $max) {
+                throw new \Exception(sprintf('Server disk space is too full to deploy to (%d%% used)', $used));
+            } elseif ($used >= $threshold) {
+                writeln(sprintf("<warning>Server disk space is almost full: %d%% used</warning>", $used));
             } else {
                 writeln(sprintf("<info>Server disk space is OK: %d%% used</info>", $used));
             }
