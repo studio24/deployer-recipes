@@ -29,17 +29,9 @@ composer global remove deployer/deployer
 sudo rm /usr/local/bin/dep
 ```
 
-## Legacy date formats in Build summaries
-
-We have encountered issues in some legacy projects where the Date/time format in the build summary is
-```
-20240415_094357
-```
-The file [tasks/show-summary.php](tasks/show-summary.md) now checks for both date formats to return the build summary.
-
 ## Fixing permission issues for deploy:writeable
-When updating projects to use `release 2.0` of Deployer Recipes we have encountered issues wih the ```deploy:writeable``` and ```deploy:shared``` tasks failing to re-assign correct permissions.
-For example 
+When updating projects to use v2 of Deployer Recipes we have encountered issues wih the ```deploy:writeable``` and ```deploy:shared``` tasks failing to re-assign correct permissions.
+For example: 
 ```
 task deploy:writable
 [staging]  error  in writable.php on line 121:
@@ -50,25 +42,29 @@ ERROR: Task deploy:writable failed!
 ```
 
 To fix this on a **staging** site we followed the below process:
-* Renamed the shared dir with ```mv /data/var/www/HOSTNAME/staging/shared /data/var/www/HOSTNAME/staging/shared-original```
-* Re-deploy ```./vendor/bin/dep deploy:prepare staging```
-* This will recreate the required shared dirs, with the correct permissions
-* This will lock the deployment, unlock with ```./vendor/bin/dep deploy:unlock staging```
-* Copy any shared files required from the ```shared-original``` to the ```shared``` dir
+* Renamed the shared dir with `mv /data/var/www/HOSTNAME/staging/shared /data/var/www/HOSTNAME/staging/shared-original`
+* Re-run the `shared` and `writable` deployment tasks to re-create these shared folders with the correct permissions:
+```
+./vendor/bin/dep deploy:shared staging
+./vendor/bin/dep deploy:writable staging
+```
+* Copy any required shared files from the `shared-original` to the `shared` dir
 
 ### Check permissions
-To check the permissions on the dir use ```getfacl /data/var/www/HOSTNAME/staging/shared/storage/app/```
+To check the permissions on the dir use `getfacl shared/storage/app/`
 
-If a sub-directory has permission issues and needs to be the same as its parent, eg.
-Writable
+If a sub-directory has permission issues and needs to be the same as its parent, e.g.
+
 ```
+# Writable
 /data/var/www/HOSTNAME/staging/shared/uploads
-```
-Non-writable
-```
+
+# Non-writable
 /data/var/www/HOSTNAME/staging/shared/uploads/2024
 ```
-Then you can
+
+Then you can run:
+
 ```
 cd /data/var/www/HOSTNAME/staging/shared/uploads/2024
 setfacl -m m::rwx .
