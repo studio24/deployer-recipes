@@ -31,7 +31,7 @@ task('check:disk-space', function () {
             if ($used >= $max) {
                 throw new \Exception(sprintf('Server disk space is too full to deploy to (%d%% used)', $used));
             } elseif ($used >= $threshold) {
-                writeln(sprintf("<warning>Server disk space is almost full: %d%% used</warning>", $used));
+                writeln(sprintf("<comment>Server disk space is almost full: %d%% used</comment>", $used));
             } else {
                 writeln(sprintf("<info>Server disk space is OK: %d%% used</info>", $used));
             }
