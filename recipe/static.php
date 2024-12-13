@@ -33,7 +33,7 @@ task('deploy', [
  * Checks out Git repo, runs build commands
  *
  * Configuration
- * build_root: root directory to store build files
+ * build_root: root directory to store build files (default is ~/.deployer)
  * build_commands: array of build commands to run on build files
  */
 desc('Build website locally');
@@ -45,6 +45,7 @@ task('deploy:build_local', function () {
     // @see https://deployer.org/docs/7.x/recipe/deploy/info
     $repo = get('what');
     $buildPath = $buildPath . '/' . $repo;
+    set('build_path', $buildPath);
 
     //  Create local build directory
     if (!file_exists($buildPath)) {
@@ -53,7 +54,7 @@ task('deploy:build_local', function () {
     }
 
     //  Remove previous local build
-    $files = (int) runLocally(sprintf('ls %s | wc -l'));
+    $files = (int) runLocally(sprintf('ls %s | wc -l', $buildPath));
     if ($files > 0) {
         run(sprintf('rm -rf %s/*', $buildPath));
         writeln('Removed previous build');
@@ -89,23 +90,23 @@ task('deploy:build_local', function () {
  * Upload website build files to remote server
  *
  * Configuration
- * build_folder: directory to rsync to the remote server the contains the built website files
- * remote_folder: directory to rsync the built websites files to on the remote server (optional, if not set = current folder)
+ * build_folder: directory that contains built website files (optional)
+ * remote_folder: directory to rsync the built websites files to, relative to release_path (optional)
  */
 desc('Sync website build files to remote');
 task("deploy:rsync_code", function() {
 
-    $buildFolder = get('build_folder');
-    if (empty($buildFolder) || !file_exists($buildFolder)) {
-        error('No source folder set! Please add the folder where your website files are built to via set("build_dist", "folder_path")');
+    $buildPath = rtrim(get('build_path'), '/') . '/' . ltrim(get('build_folder'), '/');
+    if (empty($buildPath) || !is_dir($buildPath)) {
+        error('Source folder cannot be determined via build_path or build_folder! Please add the folder where your website files are built to via set("build_folder", "path")');
     }
-    $destination = get("remote_folder", "./");
+    $destination = get("remote_folder", '');
 
     // Set web root to the build_dist so the build summary task runs
-    set('webroot', $buildFolder);
+    set('webroot', $buildPath);
 
     // Rsync
     writeln('Rsync build files to server...');
-    upload($buildFolder, $destination, ["progress_bar" => true]);
+    upload($buildPath, "{{release_path}}/$destination", ["progress_bar" => true]);
     writeln('Rsync complete.');
 });
