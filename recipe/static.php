@@ -90,7 +90,7 @@ task('deploy:build_local', function () {
 
     writeln('Run build commands...');
     foreach ($buildCommands as $command) {
-        writeln("Run $command");
+        writeln("Run: $command");
         echo runLocally($command);
     }
 
@@ -99,7 +99,6 @@ task('deploy:build_local', function () {
     if (!empty($buildFolder)) {
         $buildPath = rtrim($buildPath, '/') . '/' . ltrim($buildFolder, '/');
     }
-    writeln("Run: echo $rev > $buildPath/REVISION");
     runLocally("echo $rev > $buildPath/REVISION");
 
     writeln('Build complete.');
@@ -119,11 +118,8 @@ task("deploy:rsync_code", function() {
         error('Source folder cannot be determined via build_path or build_folder! Please add the folder where your website files are built to via set("build_folder", "path")');
     }
 
-    // Set web root to the build_folder so the build summary task runs correctly
-    set('webroot', get('build_folder'));
-
     // Rsync
-    writeln('Rsync build files to server from $buildPath to {{release_path}}...');
+    writeln("Rsync build files to server from $buildPath to {{release_path}}...");
     upload($buildPath, "{{release_path}}", ["progress_bar" => true]);
     writeln('Rsync complete.');
 });
