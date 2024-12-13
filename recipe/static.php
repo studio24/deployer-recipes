@@ -40,7 +40,6 @@ desc('Build website locally');
 task('deploy:build_local', function () {
 
     $git = get('bin/git');
-    $repository = get('repository');
     $target = get('target');
 
     $targetWithDir = $target;
@@ -94,8 +93,8 @@ task('deploy:build_local', function () {
     }
 
     // Save git revision in REVISION file
-    $git = get('bin/git');
-    $rev = escapeshellarg(runLocally("$git rev-list $target -1"));
+    $rev = runLocally("$git rev-list $target -1");
+    writeln("Run: echo $rev > $buildPath/REVISION");
     runLocally("echo $rev > $buildPath/REVISION");
 
     writeln('Build complete.');
