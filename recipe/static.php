@@ -97,7 +97,7 @@ task('deploy:build_local', function () {
     // Save git revision in REVISION file
     $rev = runLocally("$git rev-list $target -1");
     if (!empty($buildFolder)) {
-        $buildPath = rtimr($buildPath, '/') . '/' . ltrim($buildFolder, '/');
+        $buildPath = rtrim($buildPath, '/') . '/' . ltrim($buildFolder, '/');
     }
     writeln("Run: echo $rev > $buildPath/REVISION");
     runLocally("echo $rev > $buildPath/REVISION");

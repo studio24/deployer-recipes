@@ -11,9 +11,7 @@ task('show', function () {
     // Get current build summary, skip this if it doesn't exist
     $buildUrl = rtrim(get('url'), '/') . '/_build_summary.json';
     try {
-        $http = Httpie::get($buildUrl);
-        $http->nothrow(false);
-        $response = $http->send();
+        $response = Httpie::get($buildUrl)->send();
     } catch (HttpieException $e) {
         warning(sprintf('Cannot read URL %s, HTTP error: %s', $buildUrl, $e->getMessage()));
         return;
