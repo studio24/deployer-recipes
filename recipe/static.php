@@ -26,7 +26,7 @@ task('deploy:publish', [
     'deploy:unlock',
     'deploy:cleanup',
     'deploy:success',
-]);
+]);c
 
 // Deployment tasks
 desc('Deploys your project');
@@ -121,7 +121,8 @@ task('deploy:build_local', function () {
 desc('Sync website build files to remote');
 task("deploy:rsync_code", function() {
 
-    $buildPath = rtrim(get('build_path'), '/') . '/' . ltrim(get('build_folder'), '/');
+    // Ensure build path has trailing slash
+    $buildPath = rtrim(get('build_path'), '/') . '/' . trim(get('build_folder'), '/') . '/';
     if (empty($buildPath) || !is_dir($buildPath)) {
         error('Source folder cannot be determined via build_path or build_folder! Please add the folder where your website files are built to via set("build_folder", "path")');
     }
