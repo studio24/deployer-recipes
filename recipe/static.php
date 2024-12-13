@@ -39,6 +39,15 @@ task('deploy', [
 desc('Build website locally');
 task('deploy:build_local', function () {
 
+    $git = get('bin/git');
+    $repository = get('repository');
+    $target = get('target');
+
+    $targetWithDir = $target;
+    if (!empty(get('sub_directory'))) {
+        $targetWithDir .= ':{{sub_directory}}';
+    }
+
     //  Set project root directory for build
     $buildPath = get('build_root', getenv('HOME') . '/.deployer');
 
@@ -64,7 +73,7 @@ task('deploy:build_local', function () {
     writeln('Cloning repository (Branch: <info>{{branch}}</info>)');
 
     //  Clone the required branch to the local build directory
-    runLocally(sprintf("git archive {{branch}} | tar -x -f - -C %s 2>&1", $buildPath));
+    runLocally("$git archive $targetWithDir | tar -x -f - -C $buildPath 2>&1");
     writeln('Clone complete');
 
     cd($buildPath);
@@ -80,8 +89,14 @@ task('deploy:build_local', function () {
 
     writeln('Run build commands...');
     foreach ($buildCommands as $command) {
-        runLocally('composer install');
+        writeln("Run $command");
+        echo runLocally($command);
     }
+
+    // Save git revision in REVISION file
+    $git = get('bin/git');
+    $rev = escapeshellarg(runLocally("$git rev-list $target -1"));
+    runLocally("echo $rev > $buildPath/REVISION");
 
     writeln('Build complete.');
 });
