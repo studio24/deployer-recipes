@@ -34,6 +34,7 @@ task('deploy', [
  *
  * Configuration
  * build_root: root directory to store build files (default is ~/.deployer)
+ * build_folder: directory that contains built website files (optional)
  * build_commands: array of build commands to run on build files
  */
 desc('Build website locally');
@@ -49,6 +50,7 @@ task('deploy:build_local', function () {
 
     //  Set project root directory for build
     $buildPath = get('build_root', getenv('HOME') . '/.deployer');
+    $buildFolder = get('build_folder');
 
     // @see https://deployer.org/docs/7.x/recipe/deploy/info
     $repo = get('what');
@@ -94,6 +96,9 @@ task('deploy:build_local', function () {
 
     // Save git revision in REVISION file
     $rev = runLocally("$git rev-list $target -1");
+    if (!empty($buildFolder)) {
+        $buildPath = rtimr($buildPath, '/') . '/' . ltrim($buildFolder, '/');
+    }
     writeln("Run: echo $rev > $buildPath/REVISION");
     runLocally("echo $rev > $buildPath/REVISION");
 
