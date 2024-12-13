@@ -121,8 +121,8 @@ task("deploy:rsync_code", function() {
     }
     $destination = get("remote_folder", '');
 
-    // Set web root to the build_dist so the build summary task runs
-    set('webroot', $buildPath);
+    // Set web root to the build_folder so the build summary task runs correctly
+    set('webroot', get('build_folder'));
 
     // Rsync
     writeln('Rsync build files to server...');
