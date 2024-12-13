@@ -110,7 +110,6 @@ task('deploy:build_local', function () {
  *
  * Configuration
  * build_folder: directory that contains built website files (optional)
- * remote_folder: directory to rsync the built websites files to, relative to release_path (optional)
  */
 desc('Sync website build files to remote');
 task("deploy:rsync_code", function() {
@@ -119,13 +118,12 @@ task("deploy:rsync_code", function() {
     if (empty($buildPath) || !is_dir($buildPath)) {
         error('Source folder cannot be determined via build_path or build_folder! Please add the folder where your website files are built to via set("build_folder", "path")');
     }
-    $destination = get("remote_folder", '');
 
     // Set web root to the build_folder so the build summary task runs correctly
     set('webroot', get('build_folder'));
 
     // Rsync
-    writeln('Rsync build files to server...');
-    upload($buildPath, "{{release_path}}/$destination", ["progress_bar" => true]);
+    writeln('Rsync build files to server from $buildPath to {{release_path}}...');
+    upload($buildPath, "{{release_path}}", ["progress_bar" => true]);
     writeln('Rsync complete.');
 });
