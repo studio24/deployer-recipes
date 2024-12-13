@@ -19,7 +19,7 @@ task('show', function () {
     }
 
     // Download _build_summary.json
-    download($buildSummaryPath, $destination);
+    download($buildSummaryPath, $destination, ['progress_bar' => false]);
     $data = file_get_contents($destination);
     unlink($destination);
 
