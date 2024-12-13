@@ -20,6 +20,14 @@ task('deploy:prepare', [
     'deploy:writable',
 ]);
 
+desc('Publishes the release');
+task('deploy:publish', [
+    'deploy:symlink',
+    'deploy:unlock',
+    'deploy:cleanup',
+    'deploy:success',
+]);
+
 // Deployment tasks
 desc('Deploys your project');
 task('deploy', [
@@ -119,7 +127,7 @@ task("deploy:rsync_code", function() {
     }
 
     // Rsync
-    writeln("Rsync build files to server from $buildPath to {{release_path}}...");
+    writeln("Rsync build files to server from $buildPath to {{release_path}}");
     upload($buildPath, "{{release_path}}", ["progress_bar" => true]);
     writeln('Rsync complete.');
 });
