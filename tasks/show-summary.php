@@ -8,24 +8,30 @@ use Deployer\Utility\Httpie;
 desc('Display the build_summary from the webserver');
 task('show', function () {
 
+    $current = get('current_path');
+    $buildSummaryPath = rtrim($current, '/') . '/' . trim(get('webroot'), '/') . '/_build_summary.json';
+    $destination = tempnam(sys_get_temp_dir(), '_build_summary');
+
     // Get current build summary, skip this if it doesn't exist
-    $buildUrl = rtrim(get('url'), '/') . '/_build_summary.json';
-    try {
-        $response = Httpie::get($buildUrl)->send();
-    } catch (HttpieException $e) {
-        warning(sprintf('Cannot read URL %s, HTTP error: %s', $buildUrl, $e->getMessage()));
+    if (!test("[ -f $buildSummaryPath ]")) {
+        warning(sprintf('Build summary file does not exist at path: %s', $buildSummaryPath));
         return;
     }
 
+    // Download _build_summary.json
+    download($buildSummaryPath, $destination);
+    $data = file_get_contents($destination);
+    unlink($destination);
+
     // Try to decode JSON data
     try {
-        $json = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+        $json = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
     } catch (\JsonException $e) {
-        warning(sprintf('Cannot decode JSON data from URL %s, error: %s', $buildUrl, $e->getMessage()));
+        warning(sprintf('Cannot decode JSON data in file: %s, error: %s', $buildSummaryPath, $e->getMessage()));
         return;
     }
     if (empty($json)) {
-        warning(sprintf('No valid JSON data found in URL %s', $buildUrl));
+        warning(sprintf('No valid JSON data found in file: %s', $buildSummaryPath));
         return;
     }
 
@@ -47,7 +53,7 @@ task('show', function () {
             }
         }
         if (!isset($buildData[$property])) {
-            warning(sprintf('No valid build summary data found in JSON data in URL %s', $buildUrl));
+            warning(sprintf('No valid build summary data found in file: %s', $buildSummaryPath));
             return;
         }
     }
