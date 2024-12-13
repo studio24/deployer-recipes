@@ -26,7 +26,7 @@ task('deploy:publish', [
     'deploy:unlock',
     'deploy:cleanup',
     'deploy:success',
-]);c
+]);
 
 // Deployment tasks
 desc('Deploys your project');
