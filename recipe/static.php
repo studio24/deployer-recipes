@@ -5,17 +5,14 @@ namespace Deployer;
 require_once 'recipe/common.php';
 require_once __DIR__ . '/common.php';
 
-// Save _build_summary.json to current directory for static deployments
-set('webroot', './');
-
 desc('Prepares a new release');
 task('deploy:prepare', [
     'deploy:info',
     'deploy:setup',
     'deploy:lock',
     'deploy:release',
-    'deploy:build_local',
-    'deploy:rsync_code',
+    'deploy:local_build',
+    'deploy:rsync',
     'deploy:shared',
     'deploy:writable',
 ]);
@@ -46,7 +43,7 @@ task('deploy', [
  * build_commands: array of build commands to run on build files
  */
 desc('Build website locally');
-task('deploy:build_local', function () {
+task('deploy:local_build', function () {
 
     $git = get('bin/git');
     $target = get('target');
@@ -85,31 +82,19 @@ task('deploy:build_local', function () {
     runLocally("$git archive $targetWithDir | tar -x -f - -C $buildPath 2>&1");
     writeln('Clone complete');
 
-    cd($buildPath);
+    // Save git revision
+    set('revision', runLocally("$git rev-list $target -1"));
 
     // Run build commands
-    $buildCommands = get("build_commands", []);
-    if (empty($buildCommands)) {
-        error('No build commands set, quitting! Please add an array of build commands via set("build_commands", ["command1", "command2"])');
-    }
-    if (!is_array($buildCommands)) {
-        $buildCommands = [$buildCommands];
-    }
-
     writeln('Run build commands...');
-    foreach ($buildCommands as $command) {
-        writeln("Run: $command");
-        echo runLocally($command);
-    }
-
-    // Save git revision in REVISION file
-    $rev = runLocally("$git rev-list $target -1");
-    if (!empty($buildFolder)) {
-        $buildPath = rtrim($buildPath, '/') . '/' . ltrim($buildFolder, '/');
-    }
-    runLocally("echo $rev > $buildPath/REVISION");
+    cd($buildPath);
+    invoke('local_build');
 
     writeln('Build complete.');
+});
+
+task('local_build', function() {
+    writeln('Override this task in your deploy.php file');
 });
 
 /**
@@ -120,7 +105,7 @@ task('deploy:build_local', function () {
  * rsync_folder: directory to rsync files to, relative to release_path (optional)
  */
 desc('Sync website build files to remote');
-task("deploy:rsync_code", function() {
+task("deploy:rsync", function() {
 
     // Ensure build path has trailing slash
     $buildPath = rtrim(get('build_path'), '/') . '/' . trim(get('build_folder'), '/') . '/';
@@ -132,10 +117,35 @@ task("deploy:rsync_code", function() {
     $rsyncFolder = ltrim(get('rsync_folder'), '/');
     if (!empty($rsyncFolder)) {
         $rsyncFolder = '/' . $rsyncFolder;
+        set('webroot', $rsyncFolder);
+    } else {
+        // Save _build_summary.json to current directory if rsync_folder not set
+        set('webroot', './');
     }
 
     // Rsync
     writeln("Rsync build files to server from $buildPath to {{release_path}}");
     upload($buildPath, "{{release_path}}$rsyncFolder", ["progress_bar" => true]);
     writeln('Rsync complete.');
+
+    // Save git revision in REVISION file
+    $rev = get('revision');
+    run("echo $rev > {{release_path}}/REVISION");
 });
+
+
+/**
+ * Run NPM commands locally using NVM
+ *
+ * @param string $command
+ * @param bool $nvm Whether to run via NVM, Node Version Manager
+ * @return string
+ * @throws Exception\RunException
+ */
+function runNpmLocally(string $command, bool $nvm = true)
+{
+    if ($nvm) {
+        $command = sprintf("source ~/.nvm/nvm.sh && nvm use && %s", $command);
+    }
+    return runLocally($command);
+}
