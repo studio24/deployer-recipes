@@ -75,6 +75,23 @@ cp vendor/studio24/deployer-recipes/examples/symfony.php ./deploy.php
 
 [Source](../recipe/symfony.php)
 
+### Static site:
+
+If you need to deploy a static site use this:
+
+```
+cp vendor/studio24/deployer-recipes/examples/static.php ./deploy.php
+```
+
+[Source](../recipe/static.php)
+
+Set the following config:
+* `build_commands` - an array of build commands you want to run locally to build your website
+* `build_folder` - the folder that the website files are built into, this folder is uploaded to the remote server
+
+You can optionally set the following config:
+* `build_root` - the root folder files are built to locally (defaults to `~/.deployer`)
+
 ### Default:
 
 If none of the above work, try this!
