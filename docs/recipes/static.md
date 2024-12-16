@@ -34,17 +34,35 @@ task('local_build', function() {
 });
 ```
 
+#### Sub-processes
 Please note build commands run via [Symfony Process](https://symfony.com/doc/current/components/process.html) which runs each command in a sub-process.
 
 Therefore, if you need to run commands that need to pass information to subsequent commands, use `&&` to join multiple commands into one command.
 
-If you want to run NPM commands, you can use `runNpmLocally()`, which automatically prepends `nvm use` commands to run NPM via the correct version.
+#### NVM commands
+If you want to run [NPM](https://www.npmjs.com/) commands via [NVM](https://github.com/nvm-sh/nvm), you can use the convenience function `nvm($command)` to automatically prepend `source ~/.nvm/nvm.sh && nvm use && ` to run NPM commands via the correct version.
 
 ```php
 task('local_build', function() {
-    runNpmLocally('npm install');
-    runNpmLocally('npm build');
+    runLocally(nvm('npm install'));
+    runLocally(nvm('npm build'));
 });
+```
+
+#### Real-time output
+If you want to see real time output on a build command pass the `real_time_output` option:
+
+```php
+task('local_build', function() {
+    runLocally(nvm('npm install'));
+    runLocally(nvm('npm build'), options: ['real_time_output' => true]);
+});
+```
+
+Please note, in Deployer 8 this is changing to the `forceOutput` argument:
+
+```php
+runLocally('npm build', 'forceOutput' => true);
 ```
 
 ### deploy:rsync

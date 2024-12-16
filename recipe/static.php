@@ -135,17 +135,12 @@ task("deploy:rsync", function() {
 
 
 /**
- * Run NPM commands locally using NVM
+ * Prepend npm use to run commands via NVM
  *
  * @param string $command
- * @param bool $nvm Whether to run via NVM, Node Version Manager
  * @return string
- * @throws Exception\RunException
  */
-function runNpmLocally(string $command, bool $nvm = true)
+function nvm(string $command): string
 {
-    if ($nvm) {
-        $command = sprintf("source ~/.nvm/nvm.sh && nvm use && %s", $command);
-    }
-    return runLocally($command);
+    return sprintf("source ~/.nvm/nvm.sh && nvm use && %s", $command);
 }
