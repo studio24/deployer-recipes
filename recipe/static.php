@@ -42,7 +42,7 @@ task('deploy', [
  *
  * Configuration
  * build_root: root directory to store build files (default is ~/.deployer)
- * build_folder: directory that contains built website files (optional)
+ * build_folder: directory that contains built website files
  * build_commands: array of build commands to run on build files
  */
 desc('Build website locally');
@@ -117,6 +117,7 @@ task('deploy:build_local', function () {
  *
  * Configuration
  * build_folder: directory that contains built website files (optional)
+ * rsync_folder: directory to rsync files to, relative to release_path (optional)
  */
 desc('Sync website build files to remote');
 task("deploy:rsync_code", function() {
@@ -127,8 +128,14 @@ task("deploy:rsync_code", function() {
         error('Source folder cannot be determined via build_path or build_folder! Please add the folder where your website files are built to via set("build_folder", "path")');
     }
 
+    // Destination path to rsync files to
+    $rsyncFolder = ltrim(get('rsync_folder'), '/');
+    if (!empty($rsyncFolder)) {
+        $rsyncFolder = '/' . $rsyncFolder;
+    }
+
     // Rsync
     writeln("Rsync build files to server from $buildPath to {{release_path}}");
-    upload($buildPath, "{{release_path}}", ["progress_bar" => true]);
+    upload($buildPath, "{{release_path}}$rsyncFolder", ["progress_bar" => true]);
     writeln('Rsync complete.');
 });

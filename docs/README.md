@@ -14,6 +14,7 @@ This package contains [Deployer](https://deployer.org/) recipes used to help dep
 
 ## Recipes
 
+* [Static site](recipes/static.md) - 
 * [Slack](recipes/slack.md) - send a notification to Slack when a deployment is complete
 
 ## Deployment tasks
