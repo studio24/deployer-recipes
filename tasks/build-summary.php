@@ -14,7 +14,7 @@ task('build-summary', function () {
     $build_data = [
         'environment' => get('alias'),
         'deploy_datetime' => date('c'),
-        'git_branch' => get('branch'),
+        'git_branch' => get('target'),
         'git_commit' => get('release_revision'),
         'deployed_by' => get('user'),
     ];
