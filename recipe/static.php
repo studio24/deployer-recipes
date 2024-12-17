@@ -85,14 +85,20 @@ task('deploy:local_build', function () {
     // Save git revision
     set('revision', runLocally("$git rev-list $target -1"));
 
-    // Run build commands
+    // Change working path to build folder, run build commands, then switch back
+    // @todo in Deployer 8 switch this to working_path or within()
     writeln('Run build commands...');
-    cd($buildPath);
-    invoke('local_build');
-
+    $lastWorkingPath = getenv('DEPLOYER_ROOT');
+    try {
+        putenv('DEPLOYER_ROOT=' . $buildPath);
+        invoke('local_build');
+    } finally {
+        putenv('DEPLOYER_ROOT=' . $lastWorkingPath);
+    }
     writeln('Build complete.');
 });
 
+// Placeholder local_build task, override this in your deploy.php file
 task('local_build', function() {
     writeln('Override this task in your deploy.php file');
 });
@@ -132,7 +138,6 @@ task("deploy:rsync", function() {
     $rev = get('revision');
     run("echo $rev > {{release_path}}/REVISION");
 });
-
 
 /**
  * Prepend npm use to run commands via NVM
