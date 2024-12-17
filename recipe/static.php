@@ -88,7 +88,6 @@ task('deploy:local_build', function () {
     // Change working path to build folder, run build commands, then switch back
     // @todo in Deployer 8 switch this to working_path or within()
     writeln('Run build commands...');
-    set('local_build_running', true);
     $lastWorkingPath = getenv('DEPLOYER_ROOT');
     try {
         putenv('DEPLOYER_ROOT=' . $buildPath);
