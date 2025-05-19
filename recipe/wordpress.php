@@ -2,6 +2,7 @@
 
 namespace Deployer;
 
+require_once 'recipe/common.php';
 require_once __DIR__ . '/common.php';
 
 // Shared files that need to persist between deployments
