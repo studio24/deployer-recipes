@@ -2,7 +2,6 @@
 
 namespace Deployer;
 
-require_once 'recipe/wordpress.php';
 require_once __DIR__ . '/common.php';
 
 // Shared files that need to persist between deployments
@@ -36,3 +35,15 @@ set('sync', [
         'shared/web/wp-content/uploads/' => 'web/wp-content/uploads'
     ],
 ]);
+
+// Deployment tasks
+desc('Deploys your project');
+task('deploy', [
+    'deploy:prepare',
+    'deploy:publish',
+]);
+
+// Test if root Composer file exists
+if (testLocally('[ -f ./composer.json ]')) {
+    after('deploy:prepare', 'deploy:vendors');
+}
