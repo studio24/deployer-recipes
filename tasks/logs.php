@@ -10,11 +10,9 @@ option('lines', null, InputOption::VALUE_OPTIONAL, 'How many lines of the logfil
 option('search', null, InputOption::VALUE_OPTIONAL, 'Only return lines that match the search string');
 
 // Backward compatibility
-if (commandExist('logs:app')) {
-    before('logs:app', function () {
-        normaliseLogFilesSetting();
-    });
-}
+before('logs:app', function () {
+    normaliseLogFilesSetting();
+});
 
 desc('List available log files');
 task('logs:list', function () {

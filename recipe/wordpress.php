@@ -37,6 +37,15 @@ set('sync', [
     ],
 ]);
 
+// Install WordPress
+task('deploy:wordpress_install', function() {
+    $wordPressPath = get('wordpress_path', false);
+    cd('{{release_path}}');
+    run(sprintf('mkdir -p %s', $wordPressPath));
+    $stage = get('stage');
+    run(sprintf('WP_ENV=%s wp core download --skip-content --path=%s', $stage, $wordPressPath));
+});
+
 // Deployment tasks
 desc('Deploys your project');
 task('deploy', [
@@ -45,6 +54,6 @@ task('deploy', [
 ]);
 
 // Test if root Composer file exists
-if (testLocally('[ -f ./composer.json ]')) {
+if (file_exists('./composer.json')) {
     after('deploy:prepare', 'deploy:vendors');
 }
