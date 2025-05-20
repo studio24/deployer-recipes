@@ -43,8 +43,28 @@ task('deploy:wordpress_install', function() {
     cd('{{release_path}}');
     run(sprintf('mkdir -p %s', $wordPressPath));
     $stage = get('stage');
-    run(sprintf('WP_ENV=%s wp core download --skip-content --path=%s', $stage, $wordPressPath));
+    // @see https://developer.wordpress.org/cli/commands/core/download/
+    wp(sprintf('wp core download --skip-content --path=%s', $wordPressPath), $stage);
+    writeln('Downloaded WordPress version: ');
+    wp('core version');
 });
+/**
+ * Run WP CLI
+ *
+ * @param string $command wp command, e.g. core download
+ * @param ?string $stage environment, e.g. production. Defaults to the current stage name
+ * @return void
+ * @throws Exception\Exception
+ * @throws Exception\RunException
+ * @throws Exception\TimeoutException
+ */
+function wp(string $command, ?string $stage = null)
+{
+    if (null === $stage) {
+        $stage = get('stage', 'production');
+    }
+    run(sprintf('WP_ENV=%s wp %s', $stage, $command), real_time_output: true);
+}
 
 // Deployment tasks
 desc('Deploys your project');

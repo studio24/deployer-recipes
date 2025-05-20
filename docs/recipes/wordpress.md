@@ -28,6 +28,8 @@ And add this task to run:
 after('deploy:prepare', 'deploy:wordpress_install');
 ```
 
+Please note this requires WP CLI to exist on the server.
+
 ### Composer
 
 If `composer.json` exists in the project root, the `deploy:vendors` task is automatically run.
@@ -48,6 +50,29 @@ And add this task to run:
 ```php
 // Custom (non-root) composer installs
 after('deploy:prepare', 'vendors-subpath');
+```
+
+## WP CLI
+If you need to call any [WP CLI](https://wp-cli.org/) commands this recipe includes the `wp()` function to allow you to do this.
+
+This requires WP CLI to exist on the server.
+
+Usage:
+
+```php
+wp('command');
+```
+
+E.g. to run `wp core version`
+
+```php
+wp('core version');
+```
+
+This automatically sets the current environment using the `stage` variable. You can pass this manually as the second param:
+
+```php
+wp('core version', 'staging');
 ```
 
 ## Configuration
