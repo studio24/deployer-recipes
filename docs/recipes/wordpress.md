@@ -34,6 +34,10 @@ Please note this requires WP CLI to exist on the server.
 
 If `composer.json` exists in the project root, the `deploy:vendors` task is automatically run.
 
+You can check this by running `dep tree deploy` which will show you the tasks to be run.
+
+#### Composer in sub-folders
+
 You can also run Composer in sub-folders, however, please note it is recommended you only use one root `composer.json` file in your project.
 
 To run Composer in sub-folders add:
