@@ -16,16 +16,30 @@ The static site recipe has 2 new tasks it runs:
 
 ### WordPress
 
-You can install WordPress on deployment to `wordpress_path` by adding this config variable:
+WordPress core is not in source control and should have auto-updating enabled on the server.  
+
+You can set the WordPress path via:
 
 ```
 set('wordpress_path', 'web/wordpress');
 ```
 
-And add this task to run:
+This will add `wordpress_path` to `shared_dirs` and `writable_dirs` automatically.
 
+If WordPress does not exist in this path, it installs it.
+
+It does not update WordPress on deployment.
+
+If you need to manually update WordPress run:
+
+```bash
+dep wp core update staging 
 ```
-after('deploy:prepare', 'deploy:wordpress_install');
+
+You can update to a specific version via:
+
+```bash
+dep wp core update --version=<version> staging 
 ```
 
 Please note this requires WP CLI to exist on the server.
@@ -36,25 +50,10 @@ If `composer.json` exists in the project root, the `deploy:vendors` task is auto
 
 You can check this by running `dep tree deploy` which will show you the tasks to be run.
 
-#### Composer in sub-folders
+#### Multiple Composer files in a WordPress project
 
-You can also run Composer in sub-folders, however, please note it is recommended you only use one root `composer.json` file in your project.
-
-To run Composer in sub-folders add:
-
-```php
-// Custom (non-root) composer installs
-set('composer_paths', [
-    'web/wp-content/plugins/s24-wp-image-optimiser'
-]);
-```
-
-And add this task to run:
-
-```php
-// Custom (non-root) composer installs
-after('deploy:prepare', 'vendors-subpath');
-```
+It is not recommended to have more than one composer.json file in a project. If you do have one, you should move the 
+dependencies into the root composer file.
 
 ## WP CLI
 If you need to call any [WP CLI](https://wp-cli.org/) commands this recipe includes the `wp()` function to allow you to do this.
@@ -81,7 +80,7 @@ wp('core version', 'staging');
 
 ## Configuration
 
-### Optional configuration
+### Required configuration
 
 * `wordpress_path`: directory to install WordPress to relative to the release_path
 
