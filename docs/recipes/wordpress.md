@@ -2,7 +2,52 @@
 
 Deploy a WordPress site.
 
-## Recipe
+[Source](../../recipe/wordpress.php)
+
+## Background
+
+We manage our WordPress sites using the following directory structure:
+
+```
+├── config
+|   ├── wp-config.base.php
+|   ├── wp-config.local.php
+|   ├── wp-config.production.php
+|   ├── wp-config.staging.php
+|   └── wp-config.development.php
+├── docs
+└── web
+|   ├── content
+|   |   ├── cache
+|   |   ├── mu-plugins
+|   |   ├── plugins
+|   |   ├── themes
+|   |   └── uploads
+|   ├── wordpress
+|   └── wp-config.php
+└── README.md
+```
+
+WordPress is not in source control and is installed to `web/wordpress`
+
+Source controlled plugins and themes are in the `web/content` folder.
+
+Configuration is stored in the `config` folder:
+* `wp-config.base.php` - base WordPress settings common across all enviroments
+* `wp-config.local.php` - sensitive settings such as database passwords (excluded from source control)
+* `wp-config.production.php` - production WordPress settings
+* `wp-config.staging.php` - staging WordPress settings
+* `wp-config.development.php` - development WordPress settings
+
+Documentation is stored in the `docs` folder.
+
+## Installation
+
+### Requirements
+
+This recipe requires [WP CLI](https://wp-cli.org/) to exist on the remote server.
+
+### Recipe
 
 You can copy an example deployment file:
 
@@ -16,19 +61,35 @@ The static site recipe has 2 new tasks it runs:
 
 ### WordPress
 
-WordPress core is not in source control and should have auto-updating enabled on the server.  
+WordPress core is not in source control and should have auto-update enabled on the server.  
 
-You can set the WordPress path via:
+You can change the WordPress path via:
 
 ```
 set('wordpress_path', 'web/wordpress');
 ```
 
-This will add `wordpress_path` to `shared_dirs` and `writable_dirs` automatically.
+If you change it from the default, you will need to add this path to `shared_dirs` and `writable_dirs`.
 
-If WordPress does not exist in this path, it installs it.
+#### WordPress update strategy
 
-It does not update WordPress on deployment.
+To let WordPress run updates automatically the `WP_AUTO_UPDATE_CORE` setting must exist in your config:
+
+```
+// Minor updates are enabled, development, and major updates are disabled (recommended for production)
+define('WP_AUTO_UPDATE_CORE', 'minor');
+
+// Development, minor, and major updates are all enabled
+define('WP_AUTO_UPDATE_CORE', true);
+```
+
+It is also possible to configure this via [filters](https://developer.wordpress.org/advanced-administration/upgrade/upgrading/#configuration-via-filters).
+
+#### On deployment
+
+On deployment, if WordPress does not exist in this path, it installs it. If WordPress does exist, no core updates are made on deployment.
+
+#### Manually running WordPress updates
 
 If you need to manually update WordPress run:
 
@@ -41,8 +102,6 @@ You can update to a specific version via:
 ```bash
 dep wp core update --version=<version> staging 
 ```
-
-Please note this requires WP CLI to exist on the server.
 
 ### Composer
 
