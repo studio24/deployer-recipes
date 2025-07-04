@@ -58,7 +58,7 @@ task('deploy:wordpress_install', function() {
     } else {
         writeln('Skipping WordPress download, current installed version: ');
     }
-    wp('core version');
+    wp(sprintf('core version --path=%s', $wordPressPath), $stage);
 });
 
 /**
