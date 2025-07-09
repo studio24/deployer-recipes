@@ -50,15 +50,26 @@ task('deploy:wordpress_install', function() {
     run(sprintf('mkdir -p %s', $wordPressPath));
     $stage = get('stage');
 
-    // Install WP if not already installed
-    if (!testWp('core is-installed --path=%s 2>/dev/null', $wordPressPath)) {
+    // Is WP already installed?
+    if (test(sprintf('[ -f %s/wp-blog-header.php ]', $wordPressPath))) {
+        writeln('Skipping WordPress download, current installed version: ');
+    } else {
+        // Install WP
         // @see https://developer.wordpress.org/cli/commands/core/download/
         wp(sprintf('core download --skip-content --path=%s', $wordPressPath), $stage);
         writeln('Downloaded WordPress version: ');
-    } else {
-        writeln('Skipping WordPress download, current installed version: ');
     }
     wp(sprintf('core version --path=%s', $wordPressPath), $stage);
+});
+
+// Optionally install Composer vendors if composer.json exists in project root
+task('deploy:vendors_if_exists', function() {
+    if (test('[ -f {{release_path}}/composer.json ]')) {
+        writeln('Install vendors, composer.json found');
+        invoke('deploy:vendors');
+    } else {
+        writeln('Skipping, no composer.json found');
+    }
 });
 
 /**
@@ -79,23 +90,12 @@ function wp(string $command, ?string $stage = null)
     run(sprintf('WP_ENV=%s wp %s', $stage, $command), real_time_output: true);
 }
 
-function testWp(string $command, ?string $stage = null)
-{
-    if (null === $stage) {
-        $stage = get('stage', 'production');
-    }
-    return test(sprintf('WP_ENV=%s wp %s', $stage, $command));
-}
 
 // Deployment tasks
 desc('Deploys your project');
 task('deploy', [
     'deploy:prepare',
+    'deploy:vendors_if_exists',
     'deploy:wordpress_install',
     'deploy:publish',
 ]);
-
-// Test if root Composer file exists
-if (file_exists('./composer.json')) {
-    after('deploy:prepare', 'deploy:vendors');
-}
