@@ -9,12 +9,6 @@ Deploy a WordPress site.
 We manage our WordPress sites using the following directory structure:
 
 ```
-├── config
-|   ├── wp-config.base.php
-|   ├── wp-config.local.php
-|   ├── wp-config.production.php
-|   ├── wp-config.staging.php
-|   └── wp-config.development.php
 ├── docs
 └── web
 |   ├── content
@@ -25,19 +19,18 @@ We manage our WordPress sites using the following directory structure:
 |   |   └── uploads
 |   ├── wordpress
 |   └── wp-config.php
+├── composer.json
+├── .env
 └── README.md
 ```
 
-WordPress is not in source control and is installed to `web/wordpress`
+WordPress is not in source control and is installed to `web/wordpress`. This folder is set to be writable to support auto-updates to WordPress core.
 
 Source controlled plugins and themes are in the `web/content` folder.
 
-Configuration is stored in the `config` folder:
-* `wp-config.base.php` - base WordPress settings common across all enviroments
-* `wp-config.local.php` - sensitive settings such as database passwords (excluded from source control)
-* `wp-config.production.php` - production WordPress settings
-* `wp-config.staging.php` - staging WordPress settings
-* `wp-config.development.php` - development WordPress settings
+Configuration is stored in `web/wp-config.php`
+
+Sensitive or environment configuration values are stored in a `.env` file in the project root. 
 
 Documentation is stored in the `docs` folder.
 
@@ -54,6 +47,40 @@ You can copy an example deployment file:
 ```
 cp vendor/studio24/deployer-recipes/examples/wordpress.php ./deploy.php
 ```
+
+### Loading environment variables in wp-config
+
+Local environment variables set in `.env` can be loaded in your wp-config file. 
+
+First install [vlucas/phpdotenv](https://packagist.org/packages/vlucas/phpdotenv) and include the Composer autoloader.
+
+Set your local environment variables in `.env` via name and value pairs:
+
+```
+DB_NAME="wp_database"
+S3_BUCKET="devbucket"
+```
+
+This can be loaded in your wp-config file via:
+
+```php
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+```
+
+You can then reference the environment values in wp-config via `$_ENV`. E.g.
+
+```php
+define('DB_NAME', $_ENV['DB_NAME']);
+```
+
+You can also refer to other environment variables in your `.env` file via `${NAME}`. E.g. 
+
+```
+BASE_DIR="/var/webroot/project-root"
+CACHE_DIR="${BASE_DIR}/cache"
+```
+
 
 ## Tasks
 

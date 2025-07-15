@@ -10,7 +10,7 @@ set('wordpress_path', 'web/wordpress');
 
 // Shared files that need to persist between deployments
 set('shared_files', [
-    'config/wp-config.local.php'
+    '.env'
 ]);
 
 // Shared directories that need to persist between deployments
@@ -18,7 +18,6 @@ set('shared_dirs', [
     '.well-known',
     'web/content/uploads',
     'web/content/cache',
-    '{{wordpress_path}}',
 ]);
 
 // Writable directories
