@@ -53,6 +53,8 @@ For deploying WordPress websites.
 cp vendor/studio24/deployer-recipes/examples/wordpress.php ./deploy.php
 ```
 
+See [WordPress docs](recipes/wordpress.md).
+
 [Source](../recipe/wordpress.php)
 
 ### Laravel:
