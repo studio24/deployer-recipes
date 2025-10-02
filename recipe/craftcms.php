@@ -34,11 +34,9 @@ task('craft:backup-db', function () {
     craft('db/backup', ['showOutput' => true]);
 });
 
-desc('Restore DB after deployment failure');
-task('craft:restore-db', function () {
-    $latest = run("ls -t storage/backups/ | head -n1");
-    writeln(sprintf('Restoring Craft DB from storage/backups/%s', $latest));
-    craft(sprintf('db/restore storage/backups/%s', $latest), ['showOutput' => true]);
+desc('Output warning after deployment failure');
+task('craft:fail-warning', function () {
+    warning('The Craft deployment failed, please review DB backups (storage/backups) to assess whether you need to restore the database.');
 });
 
 // @deprecated Not sure if this is still required
@@ -62,4 +60,4 @@ task('deploy', [
     'deploy:publish',
 ]);
 
-after('deploy:failed', 'craft:restore-db');
+after('deploy:failed', 'craft:fail-warning');
