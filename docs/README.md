@@ -14,7 +14,8 @@ This package contains [Deployer](https://deployer.org/) recipes used to help dep
 
 ## Recipes
 
-* [WordPress](recipes/wordpress.md)
+* [WordPress CLI installation](recipes/wordpress.md)
+* [WordPress Composer installation](recipes/wordpress-composer.md)
 * [Static site](recipes/static.md) - 
 * [Slack](recipes/slack.md) - send a notification to Slack when a deployment is complete
 

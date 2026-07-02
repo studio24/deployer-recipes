@@ -44,8 +44,13 @@ This recipe requires [WP CLI](https://wp-cli.org/) to exist on the remote server
 
 You can copy an example deployment file:
 
+For WordPress sites using the CLI to install use
 ```
 cp vendor/studio24/deployer-recipes/examples/wordpress.php ./deploy.php
+```
+For WordPress sites using Composer to install use 
+```
+cp vendor/studio24/deployer-recipes/examples/wordpress-composer.php ./deploy.php
 ```
 
 ### Loading environment variables in wp-config
