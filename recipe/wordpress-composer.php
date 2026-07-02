@@ -41,16 +41,6 @@ set('sync', [
     ],
 ]);
 
-// Optionally install Composer vendors if composer.json exists in project root
-task('deploy:vendors_if_exists', function() {
-    if (test('[ -f {{release_path}}/composer.json ]')) {
-        writeln('Install vendors, composer.json found');
-        invoke('deploy:vendors');
-    } else {
-        writeln('Skipping, no composer.json found');
-    }
-});
-
 /**
  * Run WP CLI
  *
@@ -74,6 +64,6 @@ function wp(string $command, ?string $stage = null)
 desc('Deploys your project');
 task('deploy', [
     'deploy:prepare',
-    'deploy:vendors_if_exists',
+    'deploy:vendors',
     'deploy:publish',
 ]);
