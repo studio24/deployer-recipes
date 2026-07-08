@@ -16,7 +16,7 @@ task('build-summary', function () {
         'deploy_datetime' => date('c'),
         'git_branch' => get('target'),
         'git_commit' => get('release_revision'),
-        'deployed_by' => get('user'),
+        'deployedBy' => trim(getenv('DEPLOY_USER') ?: runLocally('git log -1 --pretty=format:"%an"')),
     ];
 
     run("echo '" . json_encode($build_data, JSON_PRETTY_PRINT) . "' > _build_summary.json");
