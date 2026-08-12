@@ -42,7 +42,7 @@ function patchWordPress(string $type = 'wpcli')
         warning('Cannot test website URL, url variable not set');
     }
     $handle = curl_init($url);
-    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
     curl_exec($handle);
     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
     if ($httpCode != 200) {
@@ -75,4 +75,3 @@ function patchWordPress(string $type = 'wpcli')
 //task('wordpress:patch', function() {
 //    patchWordPress('composer');
 //});
-
