@@ -151,8 +151,8 @@ dependencies into the root composer file.
 You can run minor updates (normally used for security patches) via Deployer:
 
 ```bash
-dep wp wordpress:patch staging
-dep wp wordpress:patch production
+dep wordpress:patch staging
+dep wordpress:patch production
 ```
 
 This:
