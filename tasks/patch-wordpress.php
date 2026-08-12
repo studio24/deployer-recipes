@@ -40,25 +40,28 @@ function patchWordPress(string $type = 'wpcli')
     $url = get('url', null);
     if ($url === null) {
         warning('Cannot test website URL, url variable not set');
+        return;
     }
     $handle = curl_init($url);
     curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
     curl_exec($handle);
     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-    if ($httpCode != 200) {
-        warning(sprintf('Website URL %s does not work and returns HTTP status code %d', $url, $httpCode));
-
-        // Rollback if homepage fails 200 HTTP status test
-        switch ($type) {
-            case 'wpcli':
-                run(sprintf('wp update --version=%s', $oldVersion), real_time_output: true);
-                break;
-            case 'composer':
-                run(sprintf('composer update --with johnpbloch/wordpress-core:%s', $oldVersion), real_time_output: true);
-                break;
-        }
-        info(sprintf('Rolled back WordPress to %s', $oldVersion));
+    if ($httpCode == 200) {
+        info('All OK!');
+        return;
     }
+
+    // Rollback if homepage fails 200 HTTP status test
+    warning(sprintf('Website URL %s does not work and returns HTTP status code %d', $url, $httpCode));
+    switch ($type) {
+        case 'wpcli':
+            run(sprintf('wp update --version=%s', $oldVersion), real_time_output: true);
+            break;
+        case 'composer':
+            run(sprintf('composer update --with johnpbloch/wordpress-core:%s', $oldVersion), real_time_output: true);
+            break;
+    }
+    info(sprintf('Rolled back WordPress to %s', $oldVersion));
 }
 
 
