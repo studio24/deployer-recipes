@@ -146,6 +146,22 @@ You can check this by running `dep tree deploy` which will show you the tasks to
 It is not recommended to have more than one composer.json file in a project. If you do have one, you should move the 
 dependencies into the root composer file.
 
+## Patch WordPress
+
+You can run minor updates (normally used for security patches) via Deployer:
+
+```bash
+dep wordpress:patch staging
+dep wordpress:patch production
+```
+
+This:
+- Updates to the latest minor version
+- Tests the homepage returns a 200 HTTP status code
+- If it fails, it rolls back to the previous version installed
+
+This process does not commit code or update your composer.lock file in version control. It is intended to roll out urgent security patches quickly.
+
 ## WP CLI
 If you need to call any [WP CLI](https://wp-cli.org/) commands this recipe includes the `wp()` function to allow you to do this.
 

@@ -59,6 +59,12 @@ function wp(string $command, ?string $stage = null)
     run(sprintf('WP_ENV=%s wp %s', $stage, $command), real_time_output: true);
 }
 
+// Update security patches
+desc('Update security patches for WordPress via Composer');
+task('wordpress:patch', function() {
+    patchWordPress('composer');
+});
+
 
 // Deployment tasks
 desc('Deploys your project');
